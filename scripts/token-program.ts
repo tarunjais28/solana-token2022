@@ -128,8 +128,8 @@ const fetchBalances = async () => {
     undefined,
     TOKEN_2022_PROGRAM_ID,
   );
-  console.log("user: ",user.toString());
-  console.log("ata: ",userATA.toString());
+  console.log("user: ", user.toString());
+  console.log("ata: ", userATA.toString());
 
   let supply = (await provider.connection.getTokenSupply(mintAccount)).value
     .amount;
@@ -188,16 +188,16 @@ const mint = async () => {
   );
 
   await program.methods
-      .mintToken(tokenParams)
-      .accounts({
-        maintainers: pdaMaintainers,
-        mintAccount,
-        tokenAccount: userATA.address,
-        toAccount: userATA.address,
-        authority: AdminAddress,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
-      })
-      .rpc();
+    .mintToken(tokenParams)
+    .accounts({
+      maintainers: pdaMaintainers,
+      mintAccount,
+      tokenAccount: userATA.address,
+      toAccount: userATA.address,
+      authority: AdminAddress,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
+    })
+    .rpc();
 };
 
 export {

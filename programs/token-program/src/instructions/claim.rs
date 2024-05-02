@@ -28,7 +28,7 @@ pub fn claim_royalty(ctx: Context<ClaimTokens>, token: String) -> Result<()> {
 
     // Emit transfer event
     emit!(TransferEvent {
-        token: token,
+        token,
         amount: ctx.accounts.escrow_account.amount,
         from: caller,
         to: ctx.accounts.to_account.to_account_info().key()

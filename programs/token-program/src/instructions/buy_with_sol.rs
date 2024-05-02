@@ -42,7 +42,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
     emit!(BuyWithSolEvent {
         token: params.token,
         sol_amount: params.sol_amount,
-        token_amount: token_amount
+        token_amount
     });
 
     Ok(())
