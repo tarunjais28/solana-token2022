@@ -10,6 +10,7 @@ pub fn create_token(ctx: Context<CreateToken>, params: CreateTokenParams) -> Res
 
     let config = &mut ctx.accounts.config;
     config.royalty = params.royalty;
+    config.tokens_per_sol = params.tokens_per_sol;
 
     let space =
         ExtensionType::try_calculate_account_len::<MintState>(&[ExtensionType::PermanentDelegate])

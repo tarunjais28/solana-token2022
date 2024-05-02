@@ -90,10 +90,7 @@ pub mod token_program {
         instructions::update_royalty_percentage(ctx, token, royalty)
     }
 
-    pub fn buy_with_sol(
-        ctx: Context<BuyWithSol>,
-        params: BuyWithSolParams
-    ) -> Result<()> {
+    pub fn buy_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) -> Result<()> {
         instructions::buy_token_with_sol(ctx, params)
     }
 }

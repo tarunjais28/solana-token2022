@@ -12,6 +12,9 @@ pub struct CreateTokenParams {
 
     /// Royalty
     pub royalty: u8,
+
+    /// Token to be distributed per Sol
+    pub tokens_per_sol: u64,
 }
 
 /// The struct containing instructions for mint and burn tokens
@@ -79,7 +82,4 @@ pub struct BuyWithSolParams {
 
     /// Sol Amount
     pub sol_amount: u64,
-
-    /// Token Amount
-    pub token_amount: u64,
 }

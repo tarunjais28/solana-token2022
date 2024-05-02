@@ -551,6 +551,11 @@
           "isSigner": false
         },
         {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
@@ -627,6 +632,13 @@
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -673,6 +685,13 @@
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -824,13 +843,6 @@
             "name": "solAmount",
             "docs": [
               "Sol Amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "tokenAmount",
-            "docs": [
-              "Token Amount"
             ],
             "type": "u64"
           }

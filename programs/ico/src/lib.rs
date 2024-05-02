@@ -10,11 +10,11 @@ pub mod ico {
     pub const ICO_MINT_ADDRESS: &str = "FBKhAghAqzttng8UAAf7VuX7msiNAtVxgEsY4PrfZxP4";
     use super::*;
 
-    /* 
-    ===========================================================
-        create_ico_ata function use CreateIcoATA struct
-    ===========================================================
-*/
+    /*
+        ===========================================================
+            create_ico_ata function use CreateIcoATA struct
+        ===========================================================
+    */
     pub fn create_ico_ata(
         ctx: Context<CreateIcoATA>,
         ico_amount: u64,
@@ -43,11 +43,11 @@ pub mod ico {
         Ok(())
     }
 
-    /* 
-    ===========================================================
-        deposit_ico_in_ata function use DepositIcoInATA struct
-    ===========================================================
-*/
+    /*
+        ===========================================================
+            deposit_ico_in_ata function use DepositIcoInATA struct
+        ===========================================================
+    */
     pub fn deposit_ico_in_ata(ctx: Context<DepositIcoInATA>, ico_amount: u64) -> ProgramResult {
         if ctx.accounts.data.admin != *ctx.accounts.admin.key {
             return Err(ProgramError::IncorrectProgramId);
@@ -66,11 +66,11 @@ pub mod ico {
         Ok(())
     }
 
-    /* 
-    ===========================================================
-        buy_with_sol function use BuyWithSol struct
-    ===========================================================
-*/
+    /*
+        ===========================================================
+            buy_with_sol function use BuyWithSol struct
+        ===========================================================
+    */
     pub fn buy_with_sol(
         ctx: Context<BuyWithSol>,
         _ico_ata_for_ico_program_bump: u8,
@@ -110,11 +110,11 @@ pub mod ico {
         Ok(())
     }
 
-    /* 
-    ===========================================================
-        buy_with_usdt function use BuyWithUsdt struct
-    ===========================================================
-*/
+    /*
+        ===========================================================
+            buy_with_usdt function use BuyWithUsdt struct
+        ===========================================================
+    */
     pub fn buy_with_usdt(
         ctx: Context<BuyWithUsdt>,
         _ico_ata_for_ico_program_bump: u8,
@@ -151,11 +151,11 @@ pub mod ico {
         Ok(())
     }
 
-    /* 
-    ===========================================================
-        update_data function use UpdateData struct
-    ===========================================================
-*/
+    /*
+        ===========================================================
+            update_data function use UpdateData struct
+        ===========================================================
+    */
     pub fn update_data(ctx: Context<UpdateData>, sol_price: u64, usdt_price: u64) -> ProgramResult {
         if ctx.accounts.data.admin != *ctx.accounts.admin.key {
             return Err(ProgramError::IncorrectProgramId);
@@ -167,11 +167,11 @@ pub mod ico {
         Ok(())
     }
 
-    /* 
-    -----------------------------------------------------------
-        CreateIcoATA struct for create_ico_ata function
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            CreateIcoATA struct for create_ico_ata function
+        -----------------------------------------------------------
+    */
     #[derive(Accounts)]
     pub struct CreateIcoATA<'info> {
         // 1. PDA (pubkey) for ico ATA for our program.
@@ -207,11 +207,11 @@ pub mod ico {
         pub rent: Sysvar<'info, Rent>,
     }
 
-    /* 
-    -----------------------------------------------------------
-        DepositIcoInATA struct for deposit_ico_in_ata function
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            DepositIcoInATA struct for deposit_ico_in_ata function
+        -----------------------------------------------------------
+    */
     #[derive(Accounts)]
     pub struct DepositIcoInATA<'info> {
         #[account(mut)]
@@ -233,11 +233,11 @@ pub mod ico {
         pub token_program: Program<'info, Token>,
     }
 
-    /* 
-    -----------------------------------------------------------
-        BuyWithSol struct for buy_with_sol function
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            BuyWithSol struct for buy_with_sol function
+        -----------------------------------------------------------
+    */
     #[derive(Accounts)]
     #[instruction(_ico_ata_for_ico_program_bump: u8)]
     pub struct BuyWithSol<'info> {
@@ -270,11 +270,11 @@ pub mod ico {
         pub system_program: Program<'info, System>,
     }
 
-    /* 
-    -----------------------------------------------------------
-        BuyWithUsdt struct for buy_with_usdt function
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            BuyWithUsdt struct for buy_with_usdt function
+        -----------------------------------------------------------
+    */
     #[derive(Accounts)]
     #[instruction(_ico_ata_for_ico_program_bump: u8)]
     pub struct BuyWithUsdt<'info> {
@@ -308,11 +308,11 @@ pub mod ico {
         pub token_program: Program<'info, Token>,
     }
 
-    /* 
-    -----------------------------------------------------------
-        UpdateData struct for update_data function
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            UpdateData struct for update_data function
+        -----------------------------------------------------------
+    */
     #[derive(Accounts)]
     pub struct UpdateData<'info> {
         #[account(mut)]
@@ -322,11 +322,11 @@ pub mod ico {
         pub system_program: Program<'info, System>,
     }
 
-    /* 
-    -----------------------------------------------------------
-        Data struct for PDA Account
-    -----------------------------------------------------------
-*/
+    /*
+        -----------------------------------------------------------
+            Data struct for PDA Account
+        -----------------------------------------------------------
+    */
     #[account]
     pub struct Data {
         pub sol: u64,

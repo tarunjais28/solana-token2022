@@ -15,14 +15,14 @@ const admin = anchor.web3.Keypair.generate();
 const payer = anchor.web3.Keypair.generate();
 const user1 = anchor.web3.Keypair.generate();
 const user2 = anchor.web3.Keypair.generate();
-const fundManager = anchor.web3.Keypair.generate();
+const vault = anchor.web3.Keypair.generate();
 const mintAuthority = anchor.web3.Keypair.generate();
 
 // Create constant amount fields
 const MINT_AMOUNT = new BN(1000);
 const BURN_AMOUNT = new BN(600);
 const BURN_FROM_AMOUNT = new BN(200);
-const DECIMALS = 6;
+const TOKEN_AMOUNT = new BN(100);
 
 // Constant seeds
 const TEST_TOKEN = "Test";
@@ -183,6 +183,7 @@ describe("token_program", () => {
       .buyWithSol(buyWithSolParams)
       .accounts({
         mintAccount,
+        config: pdaConfig,
         user: user.publicKey,
         userAta,
         vaultAccount,
@@ -228,11 +229,11 @@ describe("token_program", () => {
     );
     await confirmTransaction(mintAuthoritySol);
 
-    let fundManagerSol = await provider.connection.requestAirdrop(
-      fundManager.publicKey,
+    let vaultSol = await provider.connection.requestAirdrop(
+      vault.publicKey,
       anchor.web3.LAMPORTS_PER_SOL,
     );
-    await confirmTransaction(fundManagerSol);
+    await confirmTransaction(vaultSol);
   });
 
   it("Initialize global account", async () => {
@@ -248,7 +249,7 @@ describe("token_program", () => {
 
     // Test initialize instruction
     let init = await program.methods
-      .init([fundManager.publicKey])
+      .init([vault.publicKey])
       .accounts({
         maintainers: pdaMaintainers,
         whitelist: pdaWhitelist,
@@ -271,9 +272,7 @@ describe("token_program", () => {
 
     let whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
     assert.isTrue(
-      JSON.stringify(whitelist.users).includes(
-        JSON.stringify(fundManager.publicKey),
-      ),
+      JSON.stringify(whitelist.users).includes(JSON.stringify(vault.publicKey)),
     );
   });
 
@@ -297,6 +296,7 @@ describe("token_program", () => {
       name: TEST_TOKEN,
       decimals: 1,
       royalty: 1,
+      tokensPerSol: TOKEN_AMOUNT,
     };
 
     await createToken(createTokenParams);
@@ -304,12 +304,17 @@ describe("token_program", () => {
     // Check the configuration after transaction
     let config = await program.account.tokenConfiguration.fetch(pdaConfig);
     assert.equal(config.royalty, createTokenParams.royalty);
+    assert.equal(
+      Number(config.tokensPerSol),
+      Number(createTokenParams.tokensPerSol),
+    );
 
     // Creating another token
     createTokenParams = {
       name: TEST_1_TOKEN,
       decimals: 1,
       royalty: 1,
+      tokensPerSol: TOKEN_AMOUNT,
     };
 
     [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -716,12 +721,6 @@ describe("token_program", () => {
   });
 
   it("Test Buy with Sol Token", async () => {
-    let buyWithSolParams = {
-      token: TEST_TOKEN,
-      solAmount: new BN(1),
-      tokenAmount: new BN(100),
-    };
-
     // Creating associated token for user1 and Test
     let user1ATA = await getAssociatedTokenAddress(
       mintAccount,
@@ -741,42 +740,56 @@ describe("token_program", () => {
     let user1SolBalanceBeforeBuy = await provider.connection.getBalance(
       user1.publicKey,
     );
-    let adminSolBalanceBeforeBuy = await provider.connection.getBalance(
-      admin.publicKey,
+    let vaultSolBalanceBeforeBuy = await provider.connection.getBalance(
+      vault.publicKey,
     );
 
-    let adminATA = await getOrCreateAssociatedTokenAccount(
+    let vaultATA = await getOrCreateAssociatedTokenAccount(
       provider.connection,
       payer,
       mintAccount,
-      admin.publicKey,
+      vault.publicKey,
       undefined,
       undefined,
       undefined,
       TOKEN_2022_PROGRAM_ID,
     );
 
-    let adminAccount = await getAccount(
+    // Mint to vault account
+    let tokenParams = {
+      name: TEST_TOKEN,
+      toAccount: user1.publicKey,
+      amount: new BN(1000),
+    };
+
+    await mint(tokenParams, vaultATA.address, admin);
+
+    let vaultAccount = await getAccount(
       provider.connection,
-      adminATA.address,
+      vaultATA.address,
       undefined,
       TOKEN_2022_PROGRAM_ID,
     );
-    let adminBalanceBeforeBuy = Number(adminAccount.amount);
+    let vaultBalanceBeforeBuy = Number(vaultAccount.amount);
+
+    let buyWithSolParams = {
+      token: TEST_TOKEN,
+      solAmount: new BN(1),
+    };
 
     await buyWithSol(
       buyWithSolParams,
       user1,
       user1ATA,
-      admin.publicKey,
-      adminATA.address,
+      vault.publicKey,
+      vaultATA.address,
     );
 
     let user1SolBalanceAfterBuy = await provider.connection.getBalance(
       user1.publicKey,
     );
-    let adminSolBalanceAfterBuy = await provider.connection.getBalance(
-      admin.publicKey,
+    let vaultSolBalanceAfterBuy = await provider.connection.getBalance(
+      vault.publicKey,
     );
 
     user1Account = await getAccount(
@@ -787,13 +800,13 @@ describe("token_program", () => {
     );
     let user1BalanceAfterBuy = Number(user1Account.amount);
 
-    adminAccount = await getAccount(
+    vaultAccount = await getAccount(
       provider.connection,
-      adminATA.address,
+      vaultATA.address,
       undefined,
       TOKEN_2022_PROGRAM_ID,
     );
-    let adminBalanceAfterBuy = Number(adminAccount.amount);
+    let vaultBalanceAfterBuy = Number(vaultAccount.amount);
 
     // Check balances after buy
     assert.equal(
@@ -801,18 +814,13 @@ describe("token_program", () => {
       user1SolBalanceBeforeBuy - Number(buyWithSolParams.solAmount),
     );
     assert.equal(
-      adminSolBalanceAfterBuy,
-      adminSolBalanceBeforeBuy + Number(buyWithSolParams.solAmount),
+      vaultSolBalanceAfterBuy,
+      vaultSolBalanceBeforeBuy + Number(buyWithSolParams.solAmount),
     );
 
-    assert.equal(
-      user1BalanceAfterBuy,
-      user1BalanceBeforeBuy - Number(buyWithSolParams.tokenAmount),
-    );
-    assert.equal(
-      adminBalanceAfterBuy,
-      adminBalanceBeforeBuy + Number(buyWithSolParams.tokenAmount),
-    );
+    let tokenAmount = Number(TOKEN_AMOUNT) * Number(buyWithSolParams.solAmount);
+    assert.equal(user1BalanceAfterBuy, user1BalanceBeforeBuy + tokenAmount);
+    assert.equal(vaultBalanceAfterBuy, vaultBalanceBeforeBuy - tokenAmount);
   });
 
   it("Test Force Transfer Token", async () => {

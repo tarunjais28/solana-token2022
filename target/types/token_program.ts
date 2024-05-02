@@ -551,6 +551,11 @@ export type TokenProgram = {
           "isSigner": false
         },
         {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
@@ -627,6 +632,13 @@ export type TokenProgram = {
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -673,6 +685,13 @@ export type TokenProgram = {
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -824,13 +843,6 @@ export type TokenProgram = {
             "name": "solAmount",
             "docs": [
               "Sol Amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "tokenAmount",
-            "docs": [
-              "Token Amount"
             ],
             "type": "u64"
           }
@@ -1644,6 +1656,11 @@ export const IDL: TokenProgram = {
           "isSigner": false
         },
         {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
@@ -1720,6 +1737,13 @@ export const IDL: TokenProgram = {
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -1766,6 +1790,13 @@ export const IDL: TokenProgram = {
               "Royalty"
             ],
             "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
@@ -1917,13 +1948,6 @@ export const IDL: TokenProgram = {
             "name": "solAmount",
             "docs": [
               "Sol Amount"
-            ],
-            "type": "u64"
-          },
-          {
-            "name": "tokenAmount",
-            "docs": [
-              "Token Amount"
             ],
             "type": "u64"
           }

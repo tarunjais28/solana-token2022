@@ -1,7 +1,4 @@
-
-import {
-  initTokenProgram,
-} from "./token-program";
+import { initTokenProgram } from "./token-program";
 
 import { PublicKey } from "@solana/web3.js";
 

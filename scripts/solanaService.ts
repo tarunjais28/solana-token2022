@@ -4,15 +4,12 @@ import { AnchorProvider } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
 import tokenProgramIDL from "../target/idl/token_program.json";
-import {
-  TOKEN_PROGRAM_ID,
-} from "./constant";
+import { TOKEN_PROGRAM_ID } from "./constant";
 import { TokenProgram } from "../target/types/token_program";
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import * as fs from "fs";
 
 export const tokenProgramID = new PublicKey(TOKEN_PROGRAM_ID);
-
 
 export const tokenProgramInterface = JSON.parse(
   JSON.stringify(tokenProgramIDL),

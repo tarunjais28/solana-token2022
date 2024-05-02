@@ -64,10 +64,10 @@ const initTokenProgram = async () => {
     .init([])
     .accounts({
       maintainers: pdaMaintainers,
-        whitelist: pdaWhitelist,
-        authority: AdminAddress,
-        systemProgram: anchor.web3.SystemProgram.programId,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
+      whitelist: pdaWhitelist,
+      authority: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
     })
     .rpc();
 };
