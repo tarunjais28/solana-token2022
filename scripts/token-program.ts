@@ -59,6 +59,18 @@ const [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
   program.programId,
 );
 
+const addSubAdmins = async () => {
+  await program.methods
+    .addSubAdminAccounts([
+      new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr"),
+    ])
+    .accounts({
+      maintainers: pdaMaintainers,
+      authority: AdminAddress,
+    })
+    .rpc();
+};
+
 const initTokenProgram = async () => {
   await program.methods
     .init([])
@@ -80,13 +92,10 @@ const fetchMaintainers = async () => {
 
 const createToken = async () => {
   let createTokenParams = {
-    id: "unique",
     name: TEST_TOKEN,
-    symbol: "tes",
-    uri: "some/uri",
-    issuer: AdminAddress,
-    transferAgent: AdminAddress,
-    tokenizationAgent: AdminAddress,
+    decimals: 1,
+    royalty: 1,
+    tokensPerSol: new BN(100),
   };
 
   await program.methods
@@ -96,6 +105,8 @@ const createToken = async () => {
       config: pdaConfig,
       mintAccount,
       tokenProgram: TOKEN_2022_PROGRAM_ID,
+      payer: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
     })
     .rpc();
 };
@@ -110,12 +121,15 @@ const getBaseKeys = async () => {
 };
 
 const fetchBalances = async () => {
+  let user = new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr");
   let userATA = await getAssociatedTokenAddress(
     mintAccount,
-    AdminAddress,
+    user,
     undefined,
     TOKEN_2022_PROGRAM_ID,
   );
+  console.log("user: ",user.toString());
+  console.log("ata: ",userATA.toString());
 
   let supply = (await provider.connection.getTokenSupply(mintAccount)).value
     .amount;
@@ -145,4 +159,53 @@ const updateTokenProgramAdmin = async (admin: PublicKey) => {
     .rpc();
 };
 
-export { fetchMaintainers, updateTokenProgramAdmin, initTokenProgram };
+const mint = async () => {
+  let user = new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr");
+
+  let tokenParams = {
+    name: TEST_TOKEN,
+    toAccount: user,
+    amount: new BN(100000),
+  };
+
+  const rawPayerKeypair = JSON.parse(
+    fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
+  );
+  const adminKey = anchor.web3.Keypair.fromSecretKey(
+    Buffer.from(rawPayerKeypair),
+  );
+
+  // Creating associated token for user for Test
+  let userATA = await getOrCreateAssociatedTokenAccount(
+    provider.connection,
+    adminKey,
+    mintAccount,
+    user,
+    undefined,
+    undefined,
+    undefined,
+    TOKEN_2022_PROGRAM_ID,
+  );
+
+  await program.methods
+      .mintToken(tokenParams)
+      .accounts({
+        maintainers: pdaMaintainers,
+        mintAccount,
+        tokenAccount: userATA.address,
+        toAccount: userATA.address,
+        authority: AdminAddress,
+        tokenProgram: TOKEN_2022_PROGRAM_ID,
+      })
+      .rpc();
+};
+
+export {
+  fetchMaintainers,
+  updateTokenProgramAdmin,
+  initTokenProgram,
+  addSubAdmins,
+  createToken,
+  mint,
+  fetchBalances,
+};

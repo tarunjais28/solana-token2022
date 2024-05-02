@@ -1119,7 +1119,7 @@ describe("token_program", () => {
   it("Test add to whitelist", async () => {
     let users = [user1.publicKey, user2.publicKey];
     let updateType = { add: {} };
-    
+
     // Check before whitelisting
     let whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
     assert.equal(whitelist.users.length, 1);
@@ -1143,7 +1143,7 @@ describe("token_program", () => {
   it("Test remove from whitelist", async () => {
     let users = [user1.publicKey, user2.publicKey];
     let updateType = { remove: {} };
-    
+
     // Check before whitelisting
     let whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
     assert.equal(whitelist.users.length, 3);

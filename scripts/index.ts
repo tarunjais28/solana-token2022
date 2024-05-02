@@ -1,4 +1,11 @@
-import { initTokenProgram } from "./token-program";
+import {
+  addSubAdmins,
+  fetchMaintainers,
+  initTokenProgram,
+  createToken,
+  mint,
+  fetchBalances,
+} from "./token-program";
 
 import { PublicKey } from "@solana/web3.js";
 
@@ -9,7 +16,12 @@ const callTheFunction = async () => {
   console.log("Triggering functions , please wait !");
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  await initTokenProgram();
+  // await initTokenProgram();
+  // await fetchMaintainers();
+  // await addSubAdmins();
+  // await createToken();
+  // await mint();
+  await fetchBalances();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");
