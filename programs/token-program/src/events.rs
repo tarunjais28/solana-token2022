@@ -76,3 +76,15 @@ impl UpdateRoyaltyEvent {
         Self { old, new: 0 }
     }
 }
+
+#[event]
+pub struct UpdateTokensPerSolEvent {
+    pub old: u64,
+    pub new: u64,
+}
+
+impl UpdateTokensPerSolEvent {
+    pub fn new(old: u64) -> Self {
+        Self { old, new: 0 }
+    }
+}

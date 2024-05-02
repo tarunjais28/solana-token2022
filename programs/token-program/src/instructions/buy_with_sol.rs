@@ -37,7 +37,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
         token_amount,
         ctx.accounts.mint_account.decimals,
     )?;
-    
+
     // Emit buy with sol event
     emit!(BuyWithSolEvent {
         token: params.token,

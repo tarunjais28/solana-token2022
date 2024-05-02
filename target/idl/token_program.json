@@ -543,6 +543,36 @@
       ]
     },
     {
+      "name": "updateTokensPerSol",
+      "accounts": [
+        {
+          "name": "maintainers",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "caller",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "tokensPerSol",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "buyWithSol",
       "accounts": [
         {
@@ -1059,6 +1089,21 @@
         {
           "name": "new",
           "type": "u8",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "UpdateTokensPerSolEvent",
+      "fields": [
+        {
+          "name": "old",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "new",
+          "type": "u64",
           "index": false
         }
       ]

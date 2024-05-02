@@ -1061,7 +1061,7 @@ describe("token_program", () => {
 
     let royalty = 2;
 
-    let updateLimit = await program.methods
+    let updateRoyalty = await program.methods
       .updateRoyalty(TEST_TOKEN, royalty)
       .accounts({
         maintainers: pdaMaintainers,
@@ -1071,10 +1071,29 @@ describe("token_program", () => {
       .signers([admin])
       .rpc();
 
-    await confirmTransaction(updateLimit);
+    await confirmTransaction(updateRoyalty);
 
     let newRoyalty = (await program.account.tokenConfiguration.fetch(pdaConfig))
       .royalty;
     assert.equal(newRoyalty, royalty);
+  });
+
+  it("Test Update Tokens Per Sol Value", async () => {
+    let tokensPerSol = new BN(1000);
+
+    let updateTokensPerSol = await program.methods
+      .updateTokensPerSol(TEST_TOKEN, tokensPerSol)
+      .accounts({
+        maintainers: pdaMaintainers,
+        config: pdaConfig,
+        caller: admin.publicKey,
+      })
+      .signers([admin])
+      .rpc();
+
+    await confirmTransaction(updateTokensPerSol);
+
+    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
+    assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
   });
 });

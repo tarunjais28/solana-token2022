@@ -543,6 +543,36 @@ export type TokenProgram = {
       ]
     },
     {
+      "name": "updateTokensPerSol",
+      "accounts": [
+        {
+          "name": "maintainers",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "caller",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "tokensPerSol",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "buyWithSol",
       "accounts": [
         {
@@ -1059,6 +1089,21 @@ export type TokenProgram = {
         {
           "name": "new",
           "type": "u8",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "UpdateTokensPerSolEvent",
+      "fields": [
+        {
+          "name": "old",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "new",
+          "type": "u64",
           "index": false
         }
       ]
@@ -1648,6 +1693,36 @@ export const IDL: TokenProgram = {
       ]
     },
     {
+      "name": "updateTokensPerSol",
+      "accounts": [
+        {
+          "name": "maintainers",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "caller",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "tokensPerSol",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "buyWithSol",
       "accounts": [
         {
@@ -2164,6 +2239,21 @@ export const IDL: TokenProgram = {
         {
           "name": "new",
           "type": "u8",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "UpdateTokensPerSolEvent",
+      "fields": [
+        {
+          "name": "old",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "new",
+          "type": "u64",
           "index": false
         }
       ]

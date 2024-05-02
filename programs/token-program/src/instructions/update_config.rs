@@ -24,6 +24,30 @@ pub fn update_royalty_percentage(
     Ok(())
 }
 
+/// Function to update tokens per sol
+pub fn update_token_per_sol(
+    ctx: Context<UpdateTokenConfig>,
+    _: String,
+    tokens_per_sol: u64,
+) -> Result<()> {
+    let caller = ctx.accounts.caller.to_account_info().key();
+    let sub_admins = &ctx.accounts.maintainers.sub_admins;
+    let config = &mut ctx.accounts.config;
+
+    // Ensuring authorized sender
+    require!(sub_admins.contains(&caller), CustomError::Unauthorized);
+
+    let mut event = UpdateTokensPerSolEvent::new(config.tokens_per_sol);
+    config.tokens_per_sol = tokens_per_sol;
+
+    event.new = tokens_per_sol;
+
+    // Emit update royalty event
+    emit!(event);
+
+    Ok(())
+}
+
 #[derive(Accounts)]
 #[instruction(token: String)]
 pub struct UpdateTokenConfig<'info> {

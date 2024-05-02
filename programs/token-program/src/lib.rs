@@ -90,6 +90,14 @@ pub mod token_program {
         instructions::update_royalty_percentage(ctx, token, royalty)
     }
 
+    pub fn update_tokens_per_sol(
+        ctx: Context<UpdateTokenConfig>,
+        token: String,
+        tokens_per_sol: u64,
+    ) -> Result<()> {
+        instructions::update_token_per_sol(ctx, token, tokens_per_sol)
+    }
+
     pub fn buy_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) -> Result<()> {
         instructions::buy_token_with_sol(ctx, params)
     }
