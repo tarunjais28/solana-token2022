@@ -172,6 +172,21 @@ describe("token_program", () => {
     await confirmTransaction(forceTransferToken);
   };
 
+  const manageWhitelists = async (updateType, users) => {
+    let manageWhitelist = await program.methods
+      .manangeWhitelistUsers(updateType, users)
+      .accounts({
+        maintainers: pdaMaintainers,
+        whitelist: pdaWhitelist,
+        authority: admin.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([admin])
+      .rpc();
+
+    await confirmTransaction(manageWhitelist);
+  };
+
   const buyWithSol = async (
     buyWithSolParams,
     user,
@@ -337,6 +352,10 @@ describe("token_program", () => {
     // Check the configuration after transaction
     config = await program.account.tokenConfiguration.fetch(pdaConfig);
     assert.equal(config.royalty, createTokenParams.royalty);
+    assert.equal(
+      Number(config.tokensPerSol),
+      Number(createTokenParams.tokensPerSol),
+    );
   });
 
   it("Test Mint Token", async () => {
@@ -1095,5 +1114,53 @@ describe("token_program", () => {
 
     let config = await program.account.tokenConfiguration.fetch(pdaConfig);
     assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
+  });
+
+  it("Test add to whitelist", async () => {
+    let users = [user1.publicKey, user2.publicKey];
+    let updateType = { add: {} };
+    
+    // Check before whitelisting
+    let whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
+    assert.equal(whitelist.users.length, 1);
+
+    await manageWhitelists(updateType, users);
+
+    // Check after whitelisting
+    whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
+    assert.equal(whitelist.users.length, 3);
+    assert.isTrue(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(vault.publicKey)),
+    );
+    assert.isTrue(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(user1.publicKey)),
+    );
+    assert.isTrue(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(user2.publicKey)),
+    );
+  });
+
+  it("Test remove from whitelist", async () => {
+    let users = [user1.publicKey, user2.publicKey];
+    let updateType = { remove: {} };
+    
+    // Check before whitelisting
+    let whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
+    assert.equal(whitelist.users.length, 3);
+
+    await manageWhitelists(updateType, users);
+
+    // Check after whitelisting
+    whitelist = await program.account.whitelistedUser.fetch(pdaWhitelist);
+    assert.equal(whitelist.users.length, 1);
+    assert.isTrue(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(vault.publicKey)),
+    );
+    assert.isFalse(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(user1.publicKey)),
+    );
+    assert.isFalse(
+      JSON.stringify(whitelist.users).includes(JSON.stringify(user2.publicKey)),
+    );
   });
 });
