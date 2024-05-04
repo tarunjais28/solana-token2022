@@ -15,7 +15,7 @@ mod instructions;
 mod states;
 mod structs;
 
-declare_id!("CvfjfZvWFFg3b1bA18hSkWGSfgYmxtidBgT4Xm73PV9f");
+declare_id!("9WDRRrzJQgDEPjPCci5VpWg7bheu9bEyL2VhHQH11snB");
 
 #[program]
 pub mod token_program {

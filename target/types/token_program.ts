@@ -586,6 +586,16 @@ export type TokenProgram = {
           "isSigner": false
         },
         {
+          "name": "whitelist",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
@@ -1733,6 +1743,16 @@ export const IDL: TokenProgram = {
         {
           "name": "config",
           "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "whitelist",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
           "isSigner": false
         },
         {

@@ -586,6 +586,16 @@
           "isSigner": false
         },
         {
+          "name": "whitelist",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
@@ -1147,6 +1157,6 @@
     }
   ],
   "metadata": {
-    "address": "CvfjfZvWFFg3b1bA18hSkWGSfgYmxtidBgT4Xm73PV9f"
+    "address": "9WDRRrzJQgDEPjPCci5VpWg7bheu9bEyL2VhHQH11snB"
   }
 }

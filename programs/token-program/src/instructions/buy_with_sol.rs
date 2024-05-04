@@ -20,21 +20,50 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
         params.sol_amount,
     )?;
 
-    // Transfer Tokens
-    let cpi_accounts = TransferChecked {
+    // Create the Transfer struct for our context
+    let mut cpi_accounts = TransferChecked {
+        mint: ctx.accounts.mint_account.to_account_info(),
+        to: ctx.accounts.escrow_account.to_account_info(),
+        authority: ctx.accounts.mint_account.to_account_info(),
+        from: ctx.accounts.vault_ata.to_account_info(),
+    };
+
+    let tokens_per_sol = ctx.accounts.config.tokens_per_sol;
+    let user = ctx.accounts.user.key();
+    let royalty = ctx.accounts.config.royalty;
+    let token_amount = params.sol_amount * tokens_per_sol;
+    let whitelist = &mut ctx.accounts.whitelist;
+
+    let transferrable_amount = if whitelist.users.contains(&user) {
+        token_amount
+    } else {
+        let royalty_amount = if ctx.accounts.mint_account.decimals == 0 {
+            (royalty as u64) * token_amount / 100
+        } else {
+            (royalty as u64) * token_amount / (100 * ctx.accounts.mint_account.decimals as u64)
+        };
+
+        // Transfer tokens to escrow account
+        token_2022::transfer_checked(
+            CpiContext::new_with_signer(cpi_program.clone(), cpi_accounts, &signer),
+            royalty_amount,
+            ctx.accounts.mint_account.decimals,
+        )?;
+
+        token_amount - royalty_amount
+    };
+
+    cpi_accounts = TransferChecked {
         mint: ctx.accounts.mint_account.to_account_info(),
         to: ctx.accounts.user_ata.to_account_info(),
         authority: ctx.accounts.mint_account.to_account_info(),
         from: ctx.accounts.vault_ata.to_account_info(),
     };
 
-    let tokens_per_sol = ctx.accounts.config.tokens_per_sol;
-    let token_amount = params.sol_amount * tokens_per_sol;
-
     // Transfer tokens to escrow account
     token_2022::transfer_checked(
         CpiContext::new_with_signer(cpi_program, cpi_accounts, &signer),
-        token_amount,
+        transferrable_amount,
         ctx.accounts.mint_account.decimals,
     )?;
 
@@ -64,6 +93,19 @@ pub struct BuyWithSol<'info> {
         bump,
     )]
     pub config: Account<'info, TokenConfiguration>,
+
+    #[account(
+        seeds = [WHITELIST_TAG],
+        bump,
+    )]
+    pub whitelist: Account<'info, WhitelistedUser>,
+
+    #[account(
+        mut,
+        seeds = [ESCROW_TAG, params.token.as_bytes()],
+        bump,
+    )]
+    pub escrow_account: InterfaceAccount<'info, TokenAccount>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]

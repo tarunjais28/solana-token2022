@@ -24,7 +24,7 @@ import {
   ESCROW,
 } from "./constant";
 import * as fs from "fs";
-import { PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 const { provider }: any = getProvider();
 if (!provider) throw new Error("Provider not available");
@@ -89,13 +89,12 @@ const fetchMaintainers = async () => {
   console.log(maintainers.admin.toString());
   console.log(maintainers.subAdmins.toString());
 };
-
 const createToken = async () => {
   let createTokenParams = {
     name: TEST_TOKEN,
-    decimals: 1,
+    decimals: 9,
     royalty: 1,
-    tokensPerSol: new BN(100),
+    tokensPerSol: new BN(150),
   };
 
   await program.methods
@@ -165,7 +164,7 @@ const mint = async () => {
   let tokenParams = {
     name: TEST_TOKEN,
     toAccount: user,
-    amount: new BN(100000),
+    amount: new BN(100000 * LAMPORTS_PER_SOL),
   };
 
   const rawPayerKeypair = JSON.parse(
@@ -203,12 +202,6 @@ const mint = async () => {
 const buyWithSol = async () => {
   let user = new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr");
 
-  let tokenParams = {
-    name: TEST_TOKEN,
-    toAccount: user,
-    amount: new BN(100000),
-  };
-
   const rawPayerKeypair = JSON.parse(
     fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
   );
@@ -237,22 +230,22 @@ const buyWithSol = async () => {
 
   let buyWithSolParams = {
     token: TEST_TOKEN,
-    solAmount: new BN(1),
+    solAmount: new BN(1 * LAMPORTS_PER_SOL),
   };
 
   await program.methods
-      .buyWithSol(buyWithSolParams)
-      .accounts({
-        mintAccount,
-        config: pdaConfig,
-        user: AdminAddress,
-        userAta: userATA.address,
-        vaultAccount: user,
-        vaultAta,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .rpc();
+    .buyWithSol(buyWithSolParams)
+    .accounts({
+      mintAccount,
+      config: pdaConfig,
+      user: AdminAddress,
+      userAta: userATA.address,
+      vaultAccount: user,
+      vaultAta,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .rpc();
 };
 
 export {

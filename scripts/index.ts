@@ -21,8 +21,8 @@ const callTheFunction = async () => {
   // await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
-  // await mint();
-  // await fetchBalances();
+  await mint();
+  await fetchBalances();
   // await buyWithSol();
 
   console.log("Functions Triggered, success !");

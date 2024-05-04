@@ -200,6 +200,8 @@ describe("token_program", () => {
         mintAccount,
         config: pdaConfig,
         user: user.publicKey,
+        whitelist: pdaWhitelist,
+        escrowAccount: pdaEscrow,
         userAta,
         vaultAccount,
         vaultAta,
