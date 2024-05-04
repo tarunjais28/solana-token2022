@@ -101,9 +101,12 @@ pub struct BuyWithSol<'info> {
     pub whitelist: Account<'info, WhitelistedUser>,
 
     #[account(
-        mut,
+        init_if_needed,
+        token::mint = mint_account,
+        token::authority = escrow_account,
         seeds = [ESCROW_TAG, params.token.as_bytes()],
         bump,
+        payer = user,
     )]
     pub escrow_account: InterfaceAccount<'info, TokenAccount>,
 
