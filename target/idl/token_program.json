@@ -788,13 +788,6 @@
             "type": "string"
           },
           {
-            "name": "toAccount",
-            "docs": [
-              "Token Name"
-            ],
-            "type": "publicKey"
-          },
-          {
             "name": "amount",
             "docs": [
               "Amount of tokens to be minted."
@@ -1213,6 +1206,6 @@
     }
   ],
   "metadata": {
-    "address": "Cm87uKPrdJ7gGdK64MiuDPNFFW4XNnD6bRPzBiw1Mwm9"
+    "address": "57jrYgUDnB32ukmkQ9cKXyjZ99nBWE2JTD7w573uYexY"
   }
 }

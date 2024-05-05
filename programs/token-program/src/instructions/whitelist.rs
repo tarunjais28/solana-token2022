@@ -38,7 +38,7 @@ pub struct WhitelistUser<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: Whitelist
     #[account(
@@ -53,7 +53,7 @@ pub struct WhitelistUser<'info> {
         realloc::payer = authority,
         realloc::zero = false,
     )]
-    pub whitelist: Account<'info, WhitelistedUser>,
+    pub whitelist: Box<Account<'info, WhitelistedUser>>,
 
     /// CHECK: The authority of whitelist
     #[account(mut)]

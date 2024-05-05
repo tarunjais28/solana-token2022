@@ -54,7 +54,7 @@ pub struct ForceTransferTokens<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: This is the token that we want to mint
     #[account(
@@ -62,7 +62,7 @@ pub struct ForceTransferTokens<'info> {
         seeds = [MINT_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
@@ -73,7 +73,7 @@ pub struct ForceTransferTokens<'info> {
     pub to_account: AccountInfo<'info>,
 
     #[account(mut)]
-    pub token_account: InterfaceAccount<'info, TokenAccount>,
+    pub token_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// CHECK: the authority of the mint account
     #[account(mut)]

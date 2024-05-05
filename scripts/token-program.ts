@@ -172,6 +172,29 @@ const fetchBalances = async () => {
   console.log("user balance: ", userAccountBalance);
 };
 
+const fetchContractBalances = async () => {
+  let escrowBalance = (
+    await getAccount(
+      provider.connection,
+      pdaEscrow,
+      undefined,
+      TOKEN_2022_PROGRAM_ID,
+    )
+  ).amount;
+
+  let vaultBalance = (
+    await getAccount(
+      provider.connection,
+      pdaVault,
+      undefined,
+      TOKEN_2022_PROGRAM_ID,
+    )
+  ).amount;
+
+  console.log("escrow balance: ", escrowBalance);
+  console.log("vault balance: ", vaultBalance);
+};
+
 const updateTokenProgramAdmin = async (admin: PublicKey) => {
   await program.methods
     .manageAdmin(admin)
@@ -282,4 +305,5 @@ export {
   fetchBalances,
   buyWithSol,
   getBaseKeys,
+  fetchContractBalances,
 };

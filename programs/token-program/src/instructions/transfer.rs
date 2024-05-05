@@ -72,7 +72,7 @@ pub struct TransferTokens<'info> {
         seeds = [WHITELIST_TAG],
         bump,
     )]
-    pub whitelist: Account<'info, WhitelistedUser>,
+    pub whitelist: Box<Account<'info, WhitelistedUser>>,
 
     /// CHECK: This is the token that we want to mint
     #[account(
@@ -80,20 +80,20 @@ pub struct TransferTokens<'info> {
         seeds = [MINT_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         seeds = [CONFIG_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub config: Account<'info, TokenConfiguration>,
+    pub config: Box<Account<'info, TokenConfiguration>>,
 
     #[account(
         mut,
         seeds = [ESCROW_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub escrow_account: InterfaceAccount<'info, TokenAccount>,
+    pub escrow_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]

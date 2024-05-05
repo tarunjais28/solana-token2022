@@ -64,7 +64,7 @@ pub struct UpdateSubAdmins<'info> {
         realloc::payer = authority,
         realloc::zero = false,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     #[account(mut)]
     pub authority: Signer<'info>,
@@ -80,7 +80,7 @@ pub struct UpdateAdmin<'info> {
         seeds = [MAINTAINERS_TAG],
         bump
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     #[account(mut)]
     pub authority: Signer<'info>,

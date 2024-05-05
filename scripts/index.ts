@@ -8,6 +8,7 @@ import {
   buyWithSol,
   getBaseKeys,
   initResources,
+  fetchContractBalances,
 } from "./token-program";
 
 import { PublicKey } from "@solana/web3.js";
@@ -23,11 +24,12 @@ const callTheFunction = async () => {
   // await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
-  await mint();
+  // await initResources();
+  // await mint();
   // await fetchBalances();
   // await buyWithSol();
   // await getBaseKeys();
-  // await initResources();
+  await fetchContractBalances();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");

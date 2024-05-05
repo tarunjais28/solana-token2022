@@ -788,13 +788,6 @@ export type TokenProgram = {
             "type": "string"
           },
           {
-            "name": "toAccount",
-            "docs": [
-              "Token Name"
-            ],
-            "type": "publicKey"
-          },
-          {
             "name": "amount",
             "docs": [
               "Amount of tokens to be minted."
@@ -2002,13 +1995,6 @@ export const IDL: TokenProgram = {
               "Token Name"
             ],
             "type": "string"
-          },
-          {
-            "name": "toAccount",
-            "docs": [
-              "Token Name"
-            ],
-            "type": "publicKey"
           },
           {
             "name": "amount",

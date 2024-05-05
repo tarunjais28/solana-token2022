@@ -77,7 +77,7 @@ pub struct CreateToken<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: mint initialisation
     #[account(
@@ -94,7 +94,7 @@ pub struct CreateToken<'info> {
         payer = payer,
         space = std::mem::size_of::<TokenConfiguration>() + 8
     )]
-    pub config: Account<'info, TokenConfiguration>,
+    pub config: Box<Account<'info, TokenConfiguration>>,
 
     #[account(mut)]
     pub payer: Signer<'info>,

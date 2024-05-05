@@ -28,7 +28,7 @@ pub struct Initialize<'info> {
         payer = authority,
         space = std::mem::size_of::<Maintainers>() + 32
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: Whitelist
     #[account(
@@ -38,7 +38,7 @@ pub struct Initialize<'info> {
         payer = authority,
         space = std::mem::size_of::<WhitelistedUser>() + (whitelisted_users.len() * 32),
     )]
-    pub whitelist: Account<'info, WhitelistedUser>,
+    pub whitelist: Box<Account<'info, WhitelistedUser>>,
 
     #[account(mut)]
     pub authority: Signer<'info>,

@@ -49,7 +49,7 @@ pub struct ClaimTokens<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: This is the token that we want to mint
     #[account(
@@ -57,14 +57,14 @@ pub struct ClaimTokens<'info> {
         seeds = [MINT_TAG, token.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         mut,
         seeds = [VAULT_TAG, token.as_bytes()],
         bump,
     )]
-    pub vault_account: InterfaceAccount<'info, TokenAccount>,
+    pub vault_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// CHECK: This is the token account that we want to transfer tokens to
     #[account(mut)]

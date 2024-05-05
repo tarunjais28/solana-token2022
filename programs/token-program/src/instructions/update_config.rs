@@ -55,14 +55,14 @@ pub struct UpdateTokenConfig<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     #[account(
         mut,
         seeds = [CONFIG_TAG, token.as_bytes()],
         bump,
     )]
-    pub config: Account<'info, TokenConfiguration>,
+    pub config: Box<Account<'info, TokenConfiguration>>,
 
     /// CHECK: The caller
     #[account(mut)]

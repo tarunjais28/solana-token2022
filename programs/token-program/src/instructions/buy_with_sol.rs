@@ -82,33 +82,33 @@ pub struct BuyWithSol<'info> {
         seeds = [MINT_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         seeds = [CONFIG_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub config: Account<'info, TokenConfiguration>,
+    pub config: Box<Account<'info, TokenConfiguration>>,
 
     #[account(
         seeds = [WHITELIST_TAG],
         bump,
     )]
-    pub whitelist: Account<'info, WhitelistedUser>,
+    pub whitelist: Box<Account<'info, WhitelistedUser>>,
 
     #[account(
         mut,
         seeds = [ESCROW_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub escrow_account: InterfaceAccount<'info, TokenAccount>,
+    pub escrow_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         mut,
         seeds = [VAULT_TAG, params.token.as_bytes()],
         bump,
     )]
-    pub vault_account: InterfaceAccount<'info, TokenAccount>,
+    pub vault_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
@@ -116,7 +116,7 @@ pub struct BuyWithSol<'info> {
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
-    pub user_ata: InterfaceAccount<'info, TokenAccount>,
+    pub user_ata: Box<InterfaceAccount<'info, TokenAccount>>,
 
     pub token_program: Program<'info, Token2022>,
 

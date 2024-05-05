@@ -41,7 +41,7 @@ pub struct BurnToken<'info> {
         seeds = [MAINTAINERS_TAG],
         bump,
     )]
-    pub maintainers: Account<'info, Maintainers>,
+    pub maintainers: Box<Account<'info, Maintainers>>,
 
     /// CHECK: This is the token that we want to mint
     #[account(
@@ -49,7 +49,7 @@ pub struct BurnToken<'info> {
         seeds = [MINT_TAG, params.name.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     /// CHECK: This is the token account that we want to burn tokens from
     #[account(mut)]
