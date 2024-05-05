@@ -24,9 +24,6 @@ pub struct TokenParams {
     /// Token Name
     pub name: String,
 
-    /// Token Name
-    pub to_account: Pubkey,
-
     /// Amount of tokens to be minted.
     pub amount: u64,
 }

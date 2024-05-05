@@ -104,7 +104,6 @@ describe("token_program", () => {
       .accounts({
         maintainers: pdaMaintainers,
         mintAccount,
-        tokenAccount: user1ATA,
         toAccount: user1ATA,
         authority: signer.publicKey,
         tokenProgram: TOKEN_2022_PROGRAM_ID,
@@ -389,7 +388,6 @@ describe("token_program", () => {
 
     let tokenParams = {
       name: TEST_TOKEN,
-      toAccount: user1.publicKey,
       amount: MINT_AMOUNT,
     };
 
@@ -432,7 +430,6 @@ describe("token_program", () => {
 
     tokenParams = {
       name: TEST_1_TOKEN,
-      toAccount: user1.publicKey,
       amount: MINT_AMOUNT,
     };
 

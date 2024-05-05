@@ -257,11 +257,6 @@
           "isSigner": false
         },
         {
-          "name": "tokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "authority",
           "isMut": true,
           "isSigner": true
@@ -1218,6 +1213,6 @@
     }
   ],
   "metadata": {
-    "address": "DPvAZyBxRbCrMhNW2HJM5UyFvxDTASZVNarLffkumKvB"
+    "address": "Cm87uKPrdJ7gGdK64MiuDPNFFW4XNnD6bRPzBiw1Mwm9"
   }
 }

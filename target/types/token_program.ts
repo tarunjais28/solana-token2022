@@ -257,11 +257,6 @@ export type TokenProgram = {
           "isSigner": false
         },
         {
-          "name": "tokenAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "authority",
           "isMut": true,
           "isSigner": true
@@ -1474,11 +1469,6 @@ export const IDL: TokenProgram = {
         },
         {
           "name": "toAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenAccount",
           "isMut": true,
           "isSigner": false
         },

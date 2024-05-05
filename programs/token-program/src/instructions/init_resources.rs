@@ -5,7 +5,6 @@ use super::*;
 /// This function can throw following errors:
 ///   - Amount Can't Be Zero (when user passes 0 amount for mint).
 pub fn init_resource_accounts(ctx: Context<InitResources>, token: String) -> Result<()> {
-
     // Emit init resource event
     emit!(InitResourcesEvent {
         token: token,
@@ -24,7 +23,7 @@ pub struct InitResources<'info> {
         seeds = [MINT_TAG, token.as_bytes()],
         bump,
     )]
-    pub mint_account: InterfaceAccount<'info, Mint>,
+    pub mint_account: Box<InterfaceAccount<'info, Mint>>,
 
     #[account(
         init,
@@ -34,7 +33,7 @@ pub struct InitResources<'info> {
         bump,
         payer = payer,
     )]
-    pub escrow_account: InterfaceAccount<'info, TokenAccount>,
+    pub escrow_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         init,
@@ -44,7 +43,7 @@ pub struct InitResources<'info> {
         bump,
         payer = payer,
     )]
-    pub vault_account: InterfaceAccount<'info, TokenAccount>,
+    pub vault_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]

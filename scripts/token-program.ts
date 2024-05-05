@@ -22,6 +22,7 @@ import {
   MINT,
   WHITELIST,
   ESCROW,
+  VAULT,
 } from "./constant";
 import * as fs from "fs";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
@@ -60,7 +61,7 @@ const [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
 );
 
 const [pdaVault] = anchor.web3.PublicKey.findProgramAddressSync(
-  [ESCROW, TEST],
+  [VAULT, TEST],
   program.programId,
 );
 
@@ -182,40 +183,38 @@ const updateTokenProgramAdmin = async (admin: PublicKey) => {
 };
 
 const mint = async () => {
-  let user = new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr");
+  // let user = new PublicKey("ArZEdFt7rq9Eoc1T4DoppEYh9vrdBHgLATxsFKRytfxr");
 
   let tokenParams = {
     name: TEST_TOKEN,
-    toAccount: user,
-    amount: new BN(1000000 * LAMPORTS_PER_SOL),
+    amount: new BN((1000000 * LAMPORTS_PER_SOL * 40) / 100),
   };
 
-  const rawPayerKeypair = JSON.parse(
-    fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
-  );
-  const adminKey = anchor.web3.Keypair.fromSecretKey(
-    Buffer.from(rawPayerKeypair),
-  );
+  // const rawPayerKeypair = JSON.parse(
+  //   fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
+  // );
+  // const adminKey = anchor.web3.Keypair.fromSecretKey(
+  //   Buffer.from(rawPayerKeypair),
+  // );
 
-  // Creating associated token for user for Test
-  let userATA = await getOrCreateAssociatedTokenAccount(
-    provider.connection,
-    adminKey,
-    mintAccount,
-    user,
-    undefined,
-    undefined,
-    undefined,
-    TOKEN_2022_PROGRAM_ID,
-  );
+  // // Creating associated token for user for Test
+  // let userATA = await getOrCreateAssociatedTokenAccount(
+  //   provider.connection,
+  //   adminKey,
+  //   mintAccount,
+  //   user,
+  //   undefined,
+  //   undefined,
+  //   undefined,
+  //   TOKEN_2022_PROGRAM_ID,
+  // );
 
   await program.methods
     .mintToken(tokenParams)
     .accounts({
       maintainers: pdaMaintainers,
       mintAccount,
-      tokenAccount: userATA.address,
-      toAccount: userATA.address,
+      toAccount: pdaEscrow,
       authority: AdminAddress,
       tokenProgram: TOKEN_2022_PROGRAM_ID,
     })

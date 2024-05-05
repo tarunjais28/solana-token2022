@@ -10,7 +10,7 @@ pub fn claim_royalty(ctx: Context<ClaimTokens>, token: String) -> Result<()> {
 
     // Ensuring authorized sender
     require!(sub_admins.contains(&caller), CustomError::Unauthorized);
-    
+
     let cpi_program = ctx.accounts.token_program.to_account_info();
 
     let seeds = &[MINT_TAG, token.as_bytes(), &[ctx.bumps.mint_account]];

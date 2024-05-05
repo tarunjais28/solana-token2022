@@ -23,10 +23,11 @@ const callTheFunction = async () => {
   // await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
-  // await mint();
+  await mint();
   // await fetchBalances();
   // await buyWithSol();
   // await getBaseKeys();
+  // await initResources();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");

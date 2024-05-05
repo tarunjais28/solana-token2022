@@ -11,12 +11,6 @@ pub fn mint(ctx: Context<MintToken>, params: TokenParams) -> Result<()> {
     // Ensuring authorized sender
     require!(sub_admins.contains(&caller), CustomError::Unauthorized);
 
-    // Ensure account not frozen
-    require!(
-        !ctx.accounts.token_account.is_frozen(),
-        CustomError::AccountFrozen
-    );
-
     // Check user balance first
     require!(params.amount > 0, CustomError::AmountCantBeZero);
 
@@ -65,9 +59,6 @@ pub struct MintToken<'info> {
     /// CHECK: This is the token account that we want to mint tokens to (ATA)
     #[account(mut)]
     pub to_account: AccountInfo<'info>,
-
-    #[account(mut)]
-    pub token_account: InterfaceAccount<'info, TokenAccount>,
 
     /// CHECK: the authority of the mint account
     #[account(mut)]

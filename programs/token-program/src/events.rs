@@ -40,7 +40,6 @@ pub struct InitResourcesEvent {
     pub vault_account: Pubkey,
 }
 
-
 #[event]
 pub struct ForceTransferEvent {
     pub token: String,
