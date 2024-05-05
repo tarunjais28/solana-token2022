@@ -37,11 +37,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
     let transferrable_amount = if whitelist.users.contains(&user) {
         token_amount
     } else {
-        let royalty_amount = if ctx.accounts.mint_account.decimals == 0 {
-            (royalty as u64) * token_amount / 100
-        } else {
-            (royalty as u64) * token_amount / (100 * ctx.accounts.mint_account.decimals as u64)
-        };
+        let royalty_amount = (royalty as u64) * token_amount / 100;
 
         // Transfer tokens to escrow account
         token_2022::transfer_checked(

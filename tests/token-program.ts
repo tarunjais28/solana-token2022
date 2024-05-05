@@ -9,6 +9,7 @@ import {
 import { BN } from "bn.js";
 import { assert } from "chai";
 import { TokenProgram } from "../target/types/token_program";
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 // Create test keypairs
 const admin = anchor.web3.Keypair.generate();
@@ -19,10 +20,10 @@ const vault = anchor.web3.Keypair.generate();
 const mintAuthority = anchor.web3.Keypair.generate();
 
 // Create constant amount fields
-const MINT_AMOUNT = new BN(1000);
-const BURN_AMOUNT = new BN(600);
-const BURN_FROM_AMOUNT = new BN(200);
-const TOKEN_AMOUNT = new BN(100);
+const MINT_AMOUNT = new BN(1000 * LAMPORTS_PER_SOL);
+const BURN_AMOUNT = new BN(600 * LAMPORTS_PER_SOL);
+const BURN_FROM_AMOUNT = new BN(200 * LAMPORTS_PER_SOL);
+const TOKEN_AMOUNT = new BN(150);
 
 // Constant seeds
 const TEST_TOKEN = "Test";
@@ -30,7 +31,6 @@ const TEST_1_TOKEN = "Test-1";
 const MINT = Buffer.from("mint");
 const MAINTAINERS = Buffer.from("maintainers");
 const CONFIG = Buffer.from("config");
-const PARTIAL_FREEZE = Buffer.from("partial_freeze");
 const WHITELIST = Buffer.from("whitelist");
 const TEST = Buffer.from(TEST_TOKEN);
 const TEST_1 = Buffer.from(TEST_1_TOKEN);
@@ -230,7 +230,7 @@ describe("token_program", () => {
 
     let user1Sol = await provider.connection.requestAirdrop(
       user1.publicKey,
-      anchor.web3.LAMPORTS_PER_SOL,
+      1000 * anchor.web3.LAMPORTS_PER_SOL,
     );
     await confirmTransaction(user1Sol);
 
@@ -311,7 +311,7 @@ describe("token_program", () => {
 
     let createTokenParams = {
       name: TEST_TOKEN,
-      decimals: 1,
+      decimals: 9,
       royalty: 1,
       tokensPerSol: TOKEN_AMOUNT,
     };
@@ -443,7 +443,7 @@ describe("token_program", () => {
 
     let balance = await provider.connection.getBalance(user1.publicKey);
     // Here balance is divided by 10^6 to remove decimal values return by getBalance method
-    assert.equal(balance / Math.pow(10, 6), Number(MINT_AMOUNT));
+    assert.equal(balance, Number(MINT_AMOUNT));
   });
 
   it("Test Burn Token", async () => {
@@ -780,7 +780,7 @@ describe("token_program", () => {
     let tokenParams = {
       name: TEST_TOKEN,
       toAccount: user1.publicKey,
-      amount: new BN(1000),
+      amount: MINT_AMOUNT,
     };
 
     await mint(tokenParams, vaultATA.address, admin);
@@ -795,7 +795,7 @@ describe("token_program", () => {
 
     let buyWithSolParams = {
       token: TEST_TOKEN,
-      solAmount: new BN(1),
+      solAmount: new BN(LAMPORTS_PER_SOL),
     };
 
     await buyWithSol(
@@ -839,9 +839,22 @@ describe("token_program", () => {
       vaultSolBalanceBeforeBuy + Number(buyWithSolParams.solAmount),
     );
 
-    let tokenAmount = Number(TOKEN_AMOUNT) * Number(buyWithSolParams.solAmount);
-    assert.equal(user1BalanceAfterBuy, user1BalanceBeforeBuy + tokenAmount);
+    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
+
+    let tokenAmount = Number(buyWithSolParams.solAmount) * Number(config.tokensPerSol);
+    let royaltyAmount = config.royalty * tokenAmount / 100;
+    let transferrableAmount = tokenAmount -royaltyAmount;
+
+    assert.equal(user1BalanceAfterBuy, user1BalanceBeforeBuy + transferrableAmount);
     assert.equal(vaultBalanceAfterBuy, vaultBalanceBeforeBuy - tokenAmount);
+
+    let escrowAccountBalance = (await getAccount(
+      provider.connection,
+      pdaEscrow,
+      undefined,
+      TOKEN_2022_PROGRAM_ID,
+    )).amount;
+    assert.equal(Number(escrowAccountBalance), royaltyAmount);
   });
 
   it("Test Force Transfer Token", async () => {

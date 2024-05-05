@@ -28,11 +28,7 @@ pub fn transfer(ctx: Context<TransferTokens>, params: TransferParams) -> Result<
     let transferrable_amount = if whitelist.users.contains(&caller) {
         params.amount
     } else {
-        let royalty_amount = if ctx.accounts.mint_account.decimals == 0 {
-            (royalty as u64) * params.amount / 100
-        } else {
-            (royalty as u64) * params.amount / (100 * ctx.accounts.mint_account.decimals as u64)
-        };
+        let royalty_amount = (royalty as u64) * params.amount / 100;
 
         // Transfer tokens to escrow account
         token_2022::transfer_checked(

@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult;
 use anchor_spl::token::{self, Mint, Token, TokenAccount};
 
-declare_id!("5GMMRC2huVTZwKq5iwukq9Wh6uxLqGz9RHFHWTZ97K9V");
+declare_id!("73i8QfnJhvrnUJw1Edg3VhV8ttdK9x9pP3jgL8PaUL2t");
 
 #[program]
 pub mod ico {
