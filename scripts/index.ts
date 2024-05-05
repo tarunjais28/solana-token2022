@@ -17,12 +17,12 @@ const callTheFunction = async () => {
   console.log("Triggering functions , please wait !");
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  await initTokenProgram();
-  await fetchMaintainers();
-  await addSubAdmins();
-  await createToken();
+  // await initTokenProgram();
+  // await fetchMaintainers();
+  // await addSubAdmins();
+  // await createToken();
   await mint();
-  await fetchBalances();
+  // await fetchBalances();
   // await buyWithSol();
 
   console.log("Functions Triggered, success !");

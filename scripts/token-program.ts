@@ -164,7 +164,7 @@ const mint = async () => {
   let tokenParams = {
     name: TEST_TOKEN,
     toAccount: user,
-    amount: new BN(100000 * LAMPORTS_PER_SOL),
+    amount: new BN(1000000 * LAMPORTS_PER_SOL),
   };
 
   const rawPayerKeypair = JSON.parse(
