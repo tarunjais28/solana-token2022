@@ -13,7 +13,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
     // Transfer sols
     let cpi_accounts = anchor_lang::system_program::Transfer {
         from: ctx.accounts.user.to_account_info(),
-        to: ctx.accounts.vault_account.to_account_info(),
+        to: ctx.accounts.escrow_account.to_account_info(),
     };
     anchor_lang::system_program::transfer(
         CpiContext::new_with_signer(cpi_program.clone(), cpi_accounts, &signer),
@@ -23,9 +23,9 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
     // Create the Transfer struct for our context
     let mut cpi_accounts = TransferChecked {
         mint: ctx.accounts.mint_account.to_account_info(),
-        to: ctx.accounts.escrow_account.to_account_info(),
+        to: ctx.accounts.vault_account.to_account_info(),
         authority: ctx.accounts.mint_account.to_account_info(),
-        from: ctx.accounts.vault_ata.to_account_info(),
+        from: ctx.accounts.escrow_account.to_account_info(),
     };
 
     let tokens_per_sol = ctx.accounts.config.tokens_per_sol;
@@ -53,7 +53,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
         mint: ctx.accounts.mint_account.to_account_info(),
         to: ctx.accounts.user_ata.to_account_info(),
         authority: ctx.accounts.mint_account.to_account_info(),
-        from: ctx.accounts.vault_ata.to_account_info(),
+        from: ctx.accounts.escrow_account.to_account_info(),
     };
 
     // Transfer tokens to escrow account
@@ -97,14 +97,18 @@ pub struct BuyWithSol<'info> {
     pub whitelist: Account<'info, WhitelistedUser>,
 
     #[account(
-        init_if_needed,
-        token::mint = mint_account,
-        token::authority = escrow_account,
+        mut,
         seeds = [ESCROW_TAG, params.token.as_bytes()],
         bump,
-        payer = user,
     )]
     pub escrow_account: InterfaceAccount<'info, TokenAccount>,
+
+    #[account(
+        mut,
+        seeds = [VAULT_TAG, params.token.as_bytes()],
+        bump,
+    )]
+    pub vault_account: InterfaceAccount<'info, TokenAccount>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
@@ -113,14 +117,6 @@ pub struct BuyWithSol<'info> {
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
     pub user_ata: InterfaceAccount<'info, TokenAccount>,
-
-    /// CHECK: This is the token account that we want to transfer tokens to
-    #[account(mut)]
-    pub vault_account: AccountInfo<'info>,
-
-    /// CHECK: This is the token account that we want to transfer tokens to
-    #[account(mut)]
-    pub vault_ata: InterfaceAccount<'info, TokenAccount>,
 
     pub token_program: Program<'info, Token2022>,
 

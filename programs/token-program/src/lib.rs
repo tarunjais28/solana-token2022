@@ -15,7 +15,7 @@ mod instructions;
 mod states;
 mod structs;
 
-declare_id!("HCwqdApb1DcMLt38y5WV18nWMyw9ETSS9Ad5TNcxvGKb");
+declare_id!("DPvAZyBxRbCrMhNW2HJM5UyFvxDTASZVNarLffkumKvB");
 
 #[program]
 pub mod token_program {
@@ -45,6 +45,10 @@ pub mod token_program {
 
     pub fn create(ctx: Context<CreateToken>, params: CreateTokenParams) -> Result<()> {
         instructions::create_token(ctx, params)
+    }
+
+    pub fn init_resources(ctx: Context<InitResources>, token: String) -> Result<()> {
+        instructions::init_resource_accounts(ctx, token)
     }
 
     pub fn mint_token(ctx: Context<MintToken>, params: TokenParams) -> Result<()> {

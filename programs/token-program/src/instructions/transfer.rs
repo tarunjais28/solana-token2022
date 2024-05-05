@@ -89,12 +89,9 @@ pub struct TransferTokens<'info> {
     pub config: Account<'info, TokenConfiguration>,
 
     #[account(
-        init_if_needed,
-        token::mint = mint_account,
-        token::authority = escrow_account,
+        mut,
         seeds = [ESCROW_TAG, params.token.as_bytes()],
         bump,
-        payer = authority,
     )]
     pub escrow_account: InterfaceAccount<'info, TokenAccount>,
 

@@ -59,6 +59,11 @@ const [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
   program.programId,
 );
 
+const [pdaVault] = anchor.web3.PublicKey.findProgramAddressSync(
+  [ESCROW, TEST],
+  program.programId,
+);
+
 const addSubAdmins = async () => {
   await program.methods
     .addSubAdminAccounts([
@@ -89,6 +94,7 @@ const fetchMaintainers = async () => {
   console.log(maintainers.admin.toString());
   console.log(maintainers.subAdmins.toString());
 };
+
 const createToken = async () => {
   let createTokenParams = {
     name: TEST_TOKEN,
@@ -110,10 +116,27 @@ const createToken = async () => {
     .rpc();
 };
 
+const initResources = async () => {
+  await program.methods
+    .initResources(TEST_TOKEN)
+    .accounts({
+      mintAccount,
+      escrowAccount: pdaEscrow,
+      vaultAccount: pdaVault,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
+      payer: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .rpc();
+};
+
 const getBaseKeys = async () => {
   console.log("mint", mintAccount.toString());
   console.log("config", pdaConfig.toString());
   console.log("maintainers", pdaMaintainers.toString());
+  console.log("pdaWhitelist", pdaWhitelist.toString());
+  console.log("pdaEscrow", pdaEscrow.toString());
+  console.log("pdaVault", pdaVault.toString());
 
   // let supply = await provider.connection.getTokenSupply(mintAccount);
   // console.log(Number(supply.value.amount));
@@ -239,8 +262,9 @@ const buyWithSol = async () => {
       mintAccount,
       config: pdaConfig,
       user: AdminAddress,
-      userAta: userATA.address,
-      vaultAccount: user,
+      whitelist: pdaWhitelist,
+      escrowAccount: pdaEscrow,
+      vaultAccount: pdaVault,
       vaultAta,
       tokenProgram: TOKEN_2022_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
@@ -254,7 +278,9 @@ export {
   initTokenProgram,
   addSubAdmins,
   createToken,
+  initResources,
   mint,
   fetchBalances,
   buyWithSol,
+  getBaseKeys,
 };

@@ -12,8 +12,9 @@ mod mint;
 mod transfer;
 mod update_config;
 mod whitelist;
+mod init_resources;
 
 pub use {
     burn::*, burn_from::*, buy_with_sol::*, claim::*, create_token::*, force_transfer::*,
-    initialize::*, maintainers::*, mint::*, transfer::*, update_config::*, whitelist::*,
+    initialize::*, maintainers::*, mint::*, transfer::*, update_config::*, whitelist::*, init_resources::*
 };

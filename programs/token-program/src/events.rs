@@ -34,6 +34,14 @@ pub struct BuyWithSolEvent {
 }
 
 #[event]
+pub struct InitResourcesEvent {
+    pub token: String,
+    pub escrow_account: Pubkey,
+    pub vault_account: Pubkey,
+}
+
+
+#[event]
 pub struct ForceTransferEvent {
     pub token: String,
     pub from: Pubkey,

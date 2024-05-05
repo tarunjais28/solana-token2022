@@ -26,6 +26,11 @@
       "name": "ESCROW_TAG",
       "type": "bytes",
       "value": "[101, 115, 99, 114, 111, 119]"
+    },
+    {
+      "name": "VAULT_TAG",
+      "type": "bytes",
+      "value": "[118, 97, 117, 108, 116]"
     }
   ],
   "instructions": [
@@ -189,6 +194,47 @@
           "type": {
             "defined": "CreateTokenParams"
           }
+        }
+      ]
+    },
+    {
+      "name": "initResources",
+      "accounts": [
+        {
+          "name": "mintAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
         }
       ]
     },
@@ -485,7 +531,7 @@
           "isSigner": false
         },
         {
-          "name": "escrowAccount",
+          "name": "vaultAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -596,22 +642,17 @@
           "isSigner": false
         },
         {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
         },
         {
           "name": "userAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAta",
           "isMut": true,
           "isSigner": false
         },
@@ -996,6 +1037,26 @@
       ]
     },
     {
+      "name": "InitResourcesEvent",
+      "fields": [
+        {
+          "name": "token",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "escrowAccount",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "vaultAccount",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
       "name": "ForceTransferEvent",
       "fields": [
         {
@@ -1157,6 +1218,6 @@
     }
   ],
   "metadata": {
-    "address": "HCwqdApb1DcMLt38y5WV18nWMyw9ETSS9Ad5TNcxvGKb"
+    "address": "DPvAZyBxRbCrMhNW2HJM5UyFvxDTASZVNarLffkumKvB"
   }
 }

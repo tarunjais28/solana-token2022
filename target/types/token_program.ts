@@ -26,6 +26,11 @@ export type TokenProgram = {
       "name": "ESCROW_TAG",
       "type": "bytes",
       "value": "[101, 115, 99, 114, 111, 119]"
+    },
+    {
+      "name": "VAULT_TAG",
+      "type": "bytes",
+      "value": "[118, 97, 117, 108, 116]"
     }
   ],
   "instructions": [
@@ -189,6 +194,47 @@ export type TokenProgram = {
           "type": {
             "defined": "CreateTokenParams"
           }
+        }
+      ]
+    },
+    {
+      "name": "initResources",
+      "accounts": [
+        {
+          "name": "mintAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
         }
       ]
     },
@@ -485,7 +531,7 @@ export type TokenProgram = {
           "isSigner": false
         },
         {
-          "name": "escrowAccount",
+          "name": "vaultAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -596,22 +642,17 @@ export type TokenProgram = {
           "isSigner": false
         },
         {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
         },
         {
           "name": "userAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAta",
           "isMut": true,
           "isSigner": false
         },
@@ -991,6 +1032,26 @@ export type TokenProgram = {
         {
           "name": "tokenAmount",
           "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "InitResourcesEvent",
+      "fields": [
+        {
+          "name": "token",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "escrowAccount",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "vaultAccount",
+          "type": "publicKey",
           "index": false
         }
       ]
@@ -1186,6 +1247,11 @@ export const IDL: TokenProgram = {
       "name": "ESCROW_TAG",
       "type": "bytes",
       "value": "[101, 115, 99, 114, 111, 119]"
+    },
+    {
+      "name": "VAULT_TAG",
+      "type": "bytes",
+      "value": "[118, 97, 117, 108, 116]"
     }
   ],
   "instructions": [
@@ -1349,6 +1415,47 @@ export const IDL: TokenProgram = {
           "type": {
             "defined": "CreateTokenParams"
           }
+        }
+      ]
+    },
+    {
+      "name": "initResources",
+      "accounts": [
+        {
+          "name": "mintAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
         }
       ]
     },
@@ -1645,7 +1752,7 @@ export const IDL: TokenProgram = {
           "isSigner": false
         },
         {
-          "name": "escrowAccount",
+          "name": "vaultAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -1756,22 +1863,17 @@ export const IDL: TokenProgram = {
           "isSigner": false
         },
         {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "user",
           "isMut": true,
           "isSigner": true
         },
         {
           "name": "userAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultAta",
           "isMut": true,
           "isSigner": false
         },
@@ -2151,6 +2253,26 @@ export const IDL: TokenProgram = {
         {
           "name": "tokenAmount",
           "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "InitResourcesEvent",
+      "fields": [
+        {
+          "name": "token",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "escrowAccount",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "vaultAccount",
+          "type": "publicKey",
           "index": false
         }
       ]
