@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/token_program.json`.
  */
 export type TokenProgram = {
-  "address": "G6RQdQFBTM3UjCvBWyCKpguz2QKzG8FxDA6ZfKrnUpxz",
+  "address": "D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn",
   "metadata": {
     "name": "tokenProgram",
     "version": "0.1.0",
@@ -564,6 +564,10 @@ export type TokenProgram = {
         {
           "name": "tokenProgram",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
       "args": [
@@ -1131,6 +1135,90 @@ export type TokenProgram = {
       ]
     },
     {
+      "name": "setConfig",
+      "discriminator": [
+        108,
+        158,
+        154,
+        175,
+        212,
+        98,
+        52,
+        66
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token"
+              }
+            ]
+          }
+        },
+        {
+          "name": "caller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "royalty",
+          "type": "u8"
+        },
+        {
+          "name": "tokensPerSol",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "transferTokens",
       "discriminator": [
         54,
@@ -1326,6 +1414,10 @@ export type TokenProgram = {
           "name": "caller",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1402,6 +1494,10 @@ export type TokenProgram = {
           "name": "caller",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1547,6 +1643,19 @@ export type TokenProgram = {
         164,
         95,
         16
+      ]
+    },
+    {
+      "name": "setConfigEvent",
+      "discriminator": [
+        249,
+        142,
+        140,
+        171,
+        248,
+        244,
+        72,
+        51
       ]
     },
     {
@@ -1777,20 +1886,6 @@ export type TokenProgram = {
               "Decimals"
             ],
             "type": "u8"
-          },
-          {
-            "name": "royalty",
-            "docs": [
-              "Royalty"
-            ],
-            "type": "u8"
-          },
-          {
-            "name": "tokensPerSol",
-            "docs": [
-              "Token to be distributed per Sol"
-            ],
-            "type": "u64"
           }
         ]
       }
@@ -1929,6 +2024,26 @@ export type TokenProgram = {
           },
           {
             "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setConfigEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token",
+            "type": "string"
+          },
+          {
+            "name": "royalty",
+            "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
             "type": "u64"
           }
         ]

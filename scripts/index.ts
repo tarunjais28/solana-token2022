@@ -9,6 +9,7 @@ import {
   getBaseKeys,
   initResources,
   fetchContractBalances,
+  setConfig
 } from "./token-program";
 
 import { PublicKey } from "@solana/web3.js";
@@ -20,9 +21,10 @@ const callTheFunction = async () => {
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // await initTokenProgram();
-  await fetchMaintainers();
+  // await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
+  // await setConfig();
   // await initResources();
   // await mint();
   // await fetchBalances();

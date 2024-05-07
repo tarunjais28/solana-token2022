@@ -8,7 +8,7 @@ import {
 } from "@solana/spl-token";
 import { BN } from "bn.js";
 import { assert } from "chai";
-import { TokenProgram } from '../target/types/token_program';
+import { TokenProgram } from "../target/types/token_program";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { it } from "node:test";
 
@@ -79,6 +79,21 @@ describe("token_program", () => {
       .rpc();
 
     await confirmTransaction(createToken);
+  };
+
+  const setConfig = async (token, royalty, tokensPerSol) => {
+    let set = await program.methods
+      .setConfig(token, royalty, tokensPerSol)
+      .accounts({
+        maintainers: pdaMaintainers,
+        config: pdaConfig,
+        caller: admin.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([admin])
+      .rpc();
+
+    await confirmTransaction(set);
   };
 
   const initResources = async (token) => {
@@ -321,19 +336,9 @@ describe("token_program", () => {
       symbol: "tes",
       uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 9,
-      royalty: 1,
-      tokensPerSol: TOKEN_AMOUNT,
     };
 
     await createToken(createTokenParams);
-
-    // Check the configuration after transaction
-    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
-    assert.equal(config.royalty, createTokenParams.royalty);
-    assert.equal(
-      Number(config.tokensPerSol),
-      Number(createTokenParams.tokensPerSol),
-    );
 
     // Creating another token
     createTokenParams = {
@@ -341,8 +346,6 @@ describe("token_program", () => {
       symbol: "tes-1",
       uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 1,
-      royalty: 1,
-      tokensPerSol: TOKEN_AMOUNT,
     };
 
     [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -356,13 +359,41 @@ describe("token_program", () => {
     );
 
     await createToken(createTokenParams);
+  });
+
+  it("Test Set Config", async () => {
+    [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
+      [CONFIG, TEST],
+      program.programId,
+    );
+
+    let royalty = 1;
+    let tokensPerSol = TOKEN_AMOUNT;
+
+    await setConfig(TEST_TOKEN, royalty, tokensPerSol);
+
+    // Check the configuration after transaction
+    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
+    assert.equal(config.royalty, royalty);
+    assert.equal(
+      Number(config.tokensPerSol),
+      Number(tokensPerSol),
+    );
+
+    // For Test-1 token
+    [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
+      [CONFIG, TEST_1],
+      program.programId,
+    );
+
+    await setConfig(TEST_1_TOKEN, royalty, tokensPerSol);
 
     // Check the configuration after transaction
     config = await program.account.tokenConfiguration.fetch(pdaConfig);
-    assert.equal(config.royalty, createTokenParams.royalty);
+    assert.equal(config.royalty, royalty);
     assert.equal(
       Number(config.tokensPerSol),
-      Number(createTokenParams.tokensPerSol),
+      Number(tokensPerSol),
     );
   });
 
@@ -1172,6 +1203,7 @@ describe("token_program", () => {
         maintainers: pdaMaintainers,
         config: pdaConfig,
         caller: admin.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
       })
       .signers([admin])
       .rpc();
@@ -1192,6 +1224,7 @@ describe("token_program", () => {
         maintainers: pdaMaintainers,
         config: pdaConfig,
         caller: admin.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
       })
       .signers([admin])
       .rpc();

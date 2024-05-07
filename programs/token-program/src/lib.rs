@@ -4,9 +4,10 @@ use anchor_lang::{
     solana_program::entrypoint::ProgramResult,
 };
 use anchor_spl::{
+    associated_token::AssociatedToken,
     token_2022::{self, Burn, MintTo, Token2022, TransferChecked},
     token_interface::{
-        token_metadata_initialize, Mint, TokenAccount, TokenInterface, TokenMetadataInitialize,
+        token_metadata_initialize, Mint, TokenAccount, TokenMetadataInitialize,
     },
 };
 pub use structs::TokenParams;
@@ -19,7 +20,7 @@ mod instructions;
 mod states;
 mod structs;
 
-declare_id!("G6RQdQFBTM3UjCvBWyCKpguz2QKzG8FxDA6ZfKrnUpxz");
+declare_id!("D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn");
 
 #[program]
 pub mod token_program {
@@ -88,6 +89,15 @@ pub mod token_program {
 
     pub fn claim(ctx: Context<ClaimTokens>, token: String) -> Result<()> {
         instructions::claim_royalty(ctx, token)
+    }
+
+    pub fn set_config(
+        ctx: Context<UpdateTokenConfig>,
+        token: String,
+        royalty: u8,
+        tokens_per_sol: u64
+    ) -> Result<()> {
+        instructions::add_config(ctx, token, royalty, tokens_per_sol)
     }
 
     pub fn update_royalty(

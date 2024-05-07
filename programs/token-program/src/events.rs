@@ -73,6 +73,13 @@ pub struct UpdateSubAdminsEvent {
 }
 
 #[event]
+pub struct SetConfigEvent {
+    pub token: String,
+    pub royalty: u8,
+    pub tokens_per_sol: u64,
+}
+
+#[event]
 pub struct UpdateRoyaltyEvent {
     pub old: u8,
     pub new: u8,

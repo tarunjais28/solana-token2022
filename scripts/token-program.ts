@@ -1,8 +1,5 @@
 import * as anchor from "@coral-xyz/anchor";
-import {
-  getProvider,
-  tokenProgramInterface,
-} from "./solanaService";
+import { getProvider, tokenProgramInterface } from "./solanaService";
 import { TokenProgram } from "../target/types/token_program";
 import { Program } from "@coral-xyz/anchor";
 import { BN } from "bn.js";
@@ -100,29 +97,33 @@ const createToken = async () => {
     symbol: "tes",
     uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
     decimals: 9,
-    royalty: 1,
-    tokensPerSol: new BN(150),
   };
 
-  console.log({
-    maintainers: pdaMaintainers,
-    config: pdaConfig,
-    mintAccount,
-    tokenProgram: TOKEN_2022_PROGRAM_ID,
-    payer: AdminAddress,
-    systemProgram: anchor.web3.SystemProgram.programId,
-  });
-  // await program.methods
-  //   .create(createTokenParams)
-  //   .accounts({
-  //     maintainers: pdaMaintainers,
-  //     config: pdaConfig,
-  //     mintAccount,
-  //     tokenProgram: TOKEN_2022_PROGRAM_ID,
-  //     payer: AdminAddress,
-  //     systemProgram: anchor.web3.SystemProgram.programId,
-  //   })
-  //   .rpc();
+  await program.methods
+    .create(createTokenParams)
+    .accounts({
+      maintainers: pdaMaintainers,
+      mintAccount,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
+      payer: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .rpc();
+};
+
+const setConfig = async () => {
+    let royalty = 1;
+    let tokensPerSol=  new BN(150);
+
+  await program.methods
+      .setConfig(TEST, royalty, tokensPerSol)
+      .accounts({
+        maintainers: pdaMaintainers,
+        config: pdaConfig,
+        caller: AdminAddress,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc();
 };
 
 const initResources = async () => {
@@ -314,4 +315,5 @@ export {
   buyWithSol,
   getBaseKeys,
   fetchContractBalances,
+  setConfig
 };

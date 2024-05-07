@@ -1,5 +1,5 @@
 {
-  "address": "G6RQdQFBTM3UjCvBWyCKpguz2QKzG8FxDA6ZfKrnUpxz",
+  "address": "D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn",
   "metadata": {
     "name": "token_program",
     "version": "0.1.0",
@@ -558,6 +558,10 @@
         {
           "name": "token_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
       "args": [
@@ -1125,6 +1129,90 @@
       ]
     },
     {
+      "name": "set_config",
+      "discriminator": [
+        108,
+        158,
+        154,
+        175,
+        212,
+        98,
+        52,
+        66
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "token"
+              }
+            ]
+          }
+        },
+        {
+          "name": "caller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "royalty",
+          "type": "u8"
+        },
+        {
+          "name": "tokens_per_sol",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "transfer_tokens",
       "discriminator": [
         54,
@@ -1320,6 +1408,10 @@
           "name": "caller",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1396,6 +1488,10 @@
           "name": "caller",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1541,6 +1637,19 @@
         164,
         95,
         16
+      ]
+    },
+    {
+      "name": "SetConfigEvent",
+      "discriminator": [
+        249,
+        142,
+        140,
+        171,
+        248,
+        244,
+        72,
+        51
       ]
     },
     {
@@ -1771,20 +1880,6 @@
               "Decimals"
             ],
             "type": "u8"
-          },
-          {
-            "name": "royalty",
-            "docs": [
-              "Royalty"
-            ],
-            "type": "u8"
-          },
-          {
-            "name": "tokens_per_sol",
-            "docs": [
-              "Token to be distributed per Sol"
-            ],
-            "type": "u64"
           }
         ]
       }
@@ -1923,6 +2018,26 @@
           },
           {
             "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetConfigEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token",
+            "type": "string"
+          },
+          {
+            "name": "royalty",
+            "type": "u8"
+          },
+          {
+            "name": "tokens_per_sol",
             "type": "u64"
           }
         ]
