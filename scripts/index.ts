@@ -20,7 +20,7 @@ const callTheFunction = async () => {
   console.log("Triggering functions , please wait !");
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  // await initTokenProgram();
+  await initTokenProgram();
   // await fetchMaintainers();
   // await addSubAdmins();
   await createToken();

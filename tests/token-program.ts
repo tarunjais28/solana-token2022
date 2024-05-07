@@ -336,16 +336,28 @@ describe("token_program", () => {
       symbol: "tes",
       uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 9,
+      royalty: 1,
+      tokensPerSol: TOKEN_AMOUNT,
     };
 
     await createToken(createTokenParams);
 
+    // Check the configuration after transaction
+    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
+    assert.equal(config.royalty, createTokenParams.royalty);
+    assert.equal(
+      Number(config.tokensPerSol),
+      Number(createTokenParams.tokensPerSol),
+    );
+
     // Creating another token
     createTokenParams = {
       name: TEST_1_TOKEN,
-      symbol: "tes-1",
+      symbol: "tes",
       uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 1,
+      royalty: 1,
+      tokensPerSol: TOKEN_AMOUNT,
     };
 
     [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -359,6 +371,14 @@ describe("token_program", () => {
     );
 
     await createToken(createTokenParams);
+
+    // Check the configuration after transaction
+    config = await program.account.tokenConfiguration.fetch(pdaConfig);
+    assert.equal(config.royalty, createTokenParams.royalty);
+    assert.equal(
+      Number(config.tokensPerSol),
+      Number(createTokenParams.tokensPerSol),
+    );
   });
 
   it("Test Set Config", async () => {

@@ -17,7 +17,11 @@ pub fn add_config(
     config.tokens_per_sol = tokens_per_sol;
 
     // Emit set config event
-    emit!(SetConfigEvent{ token, royalty, tokens_per_sol });
+    emit!(SetConfigEvent {
+        token,
+        royalty,
+        tokens_per_sol
+    });
 
     Ok(())
 }
@@ -91,6 +95,6 @@ pub struct UpdateTokenConfig<'info> {
     /// CHECK: The caller
     #[account(mut)]
     pub caller: Signer<'info>,
-    
+
     pub system_program: Program<'info, System>,
 }

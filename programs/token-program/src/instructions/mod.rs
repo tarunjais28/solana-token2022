@@ -17,6 +17,6 @@ mod whitelist;
 
 pub use {
     burn::*, burn_from::*, buy_with_sol::*, claim::*, create_token::*, force_transfer::*,
-    init_resources::*, initialize::*, maintainers::*, mint::*, transfer::*,
-    update_config::*, utils::*, whitelist::*,
+    init_resources::*, initialize::*, maintainers::*, mint::*, transfer::*, update_config::*,
+    utils::*, whitelist::*,
 };

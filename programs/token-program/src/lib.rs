@@ -1,15 +1,11 @@
 use crate::{constants::*, enums::*, errors::*, events::*, instructions::*, states::*, structs::*};
-use anchor_lang::{
-    prelude::*,
-    solana_program::entrypoint::ProgramResult,
-};
+use anchor_lang::{prelude::*, solana_program::entrypoint::ProgramResult};
 use anchor_spl::{
     associated_token::AssociatedToken,
     token_2022::{self, Burn, MintTo, Token2022, TransferChecked},
-    token_interface::{
-        token_metadata_initialize, Mint, TokenAccount, TokenMetadataInitialize,
-    },
+    token_interface::{token_metadata_initialize, Mint, TokenAccount, TokenMetadataInitialize},
 };
+use spl_token_2022::{extension::ExtensionType, state::Mint as MintState};
 pub use structs::TokenParams;
 
 mod constants;
@@ -20,7 +16,7 @@ mod instructions;
 mod states;
 mod structs;
 
-declare_id!("D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn");
+declare_id!("v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX");
 
 #[program]
 pub mod token_program {
@@ -95,7 +91,7 @@ pub mod token_program {
         ctx: Context<UpdateTokenConfig>,
         token: String,
         royalty: u8,
-        tokens_per_sol: u64
+        tokens_per_sol: u64,
     ) -> Result<()> {
         instructions::add_config(ctx, token, royalty, tokens_per_sol)
     }

@@ -1,5 +1,5 @@
 {
-  "address": "D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn",
+  "address": "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX",
   "metadata": {
     "name": "token_program",
     "version": "0.1.0",
@@ -521,6 +521,29 @@
                   114,
                   115
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "params.name"
               }
             ]
           }
@@ -1880,6 +1903,20 @@
               "Decimals"
             ],
             "type": "u8"
+          },
+          {
+            "name": "royalty",
+            "docs": [
+              "Royalty"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "tokens_per_sol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }

@@ -15,6 +15,12 @@ pub struct CreateTokenParams {
 
     /// Decimals
     pub decimals: u8,
+
+    /// Royalty
+    pub royalty: u8,
+
+    /// Token to be distributed per Sol
+    pub tokens_per_sol: u64,
 }
 
 /// The struct containing instructions for mint and burn tokens

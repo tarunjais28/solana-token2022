@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/token_program.json`.
  */
 export type TokenProgram = {
-  "address": "D5W4yH27EwaATTYjaLLidx6sLRJ9AsXH6kZCSGvoritn",
+  "address": "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX",
   "metadata": {
     "name": "tokenProgram",
     "version": "0.1.0",
@@ -527,6 +527,29 @@ export type TokenProgram = {
                   114,
                   115
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "params.name"
               }
             ]
           }
@@ -1886,6 +1909,20 @@ export type TokenProgram = {
               "Decimals"
             ],
             "type": "u8"
+          },
+          {
+            "name": "royalty",
+            "docs": [
+              "Royalty"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "tokensPerSol",
+            "docs": [
+              "Token to be distributed per Sol"
+            ],
+            "type": "u64"
           }
         ]
       }
