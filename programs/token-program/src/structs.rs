@@ -7,6 +7,12 @@ pub struct CreateTokenParams {
     /// Token Name
     pub name: String,
 
+    /// Symbol
+    pub symbol: String,
+
+    /// URI
+    pub uri: String,
+
     /// Decimals
     pub decimals: u8,
 

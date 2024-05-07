@@ -1,249 +1,365 @@
 {
-  "version": "0.1.0",
-  "name": "ico",
+  "address": "73i8QfnJhvrnUJw1Edg3VhV8ttdK9x9pP3jgL8PaUL2t",
+  "metadata": {
+    "name": "ico",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
   "instructions": [
     {
-      "name": "createIcoAta",
+      "name": "buy_with_sol",
+      "discriminator": [
+        49,
+        57,
+        124,
+        194,
+        240,
+        20,
+        216,
+        102
+      ],
       "accounts": [
         {
-          "name": "icoAtaForIcoProgram",
-          "isMut": true,
-          "isSigner": false
+          "name": "ico_ata_for_ico_program",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "ico_mint"
+              }
+            ]
+          }
         },
         {
           "name": "data",
-          "isMut": true,
-          "isSigner": false
+          "writable": true
         },
         {
-          "name": "icoMint",
-          "isMut": false,
-          "isSigner": false
+          "name": "ico_mint",
+          "address": "FBKhAghAqzttng8UAAf7VuX7msiNAtVxgEsY4PrfZxP4"
         },
         {
-          "name": "icoAtaForAdmin",
-          "isMut": true,
-          "isSigner": false
+          "name": "ico_ata_for_user",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
         },
         {
           "name": "admin",
-          "isMut": true,
-          "isSigner": true
+          "writable": true
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_ico_ata_for_ico_program_bump",
+          "type": "u8"
+        },
+        {
+          "name": "sol_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "buy_with_usdt",
+      "discriminator": [
+        153,
+        240,
+        26,
+        40,
+        127,
+        249,
+        89,
+        78
+      ],
+      "accounts": [
+        {
+          "name": "ico_ata_for_ico_program",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "ico_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "data",
+          "writable": true
+        },
+        {
+          "name": "ico_mint",
+          "address": "FBKhAghAqzttng8UAAf7VuX7msiNAtVxgEsY4PrfZxP4"
+        },
+        {
+          "name": "ico_ata_for_user",
+          "writable": true
+        },
+        {
+          "name": "usdt_ata_for_user",
+          "writable": true
+        },
+        {
+          "name": "usdt_ata_for_admin",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "_ico_ata_for_ico_program_bump",
+          "type": "u8"
+        },
+        {
+          "name": "usdt_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "create_ico_ata",
+      "discriminator": [
+        66,
+        83,
+        250,
+        92,
+        218,
+        161,
+        143,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "ico_ata_for_ico_program",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  210,
+                  168,
+                  143,
+                  142,
+                  247,
+                  136,
+                  78,
+                  10,
+                  218,
+                  122,
+                  125,
+                  76,
+                  171,
+                  128,
+                  26,
+                  169,
+                  22,
+                  146,
+                  14,
+                  197,
+                  170,
+                  207,
+                  111,
+                  255,
+                  70,
+                  54,
+                  23,
+                  77,
+                  166,
+                  32,
+                  72,
+                  187
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "admin"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ico_mint",
+          "address": "FBKhAghAqzttng8UAAf7VuX7msiNAtVxgEsY4PrfZxP4"
+        },
+        {
+          "name": "ico_ata_for_admin",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
           "name": "rent",
-          "isMut": false,
-          "isSigner": false
+          "address": "SysvarRent111111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "icoAmount",
+          "name": "ico_amount",
           "type": "u64"
         },
         {
-          "name": "solPrice",
+          "name": "sol_price",
           "type": "u64"
         },
         {
-          "name": "usdtPrice",
+          "name": "usdt_price",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "depositIcoInAta",
+      "name": "deposit_ico_in_ata",
+      "discriminator": [
+        48,
+        0,
+        248,
+        161,
+        100,
+        149,
+        210,
+        57
+      ],
       "accounts": [
         {
-          "name": "icoAtaForIcoProgram",
-          "isMut": true,
-          "isSigner": false
+          "name": "ico_ata_for_ico_program",
+          "writable": true
         },
         {
           "name": "data",
-          "isMut": true,
-          "isSigner": false
+          "writable": true
         },
         {
-          "name": "icoMint",
-          "isMut": false,
-          "isSigner": false
+          "name": "ico_mint",
+          "address": "FBKhAghAqzttng8UAAf7VuX7msiNAtVxgEsY4PrfZxP4"
         },
         {
-          "name": "icoAtaForAdmin",
-          "isMut": true,
-          "isSigner": false
+          "name": "ico_ata_for_admin",
+          "writable": true
         },
         {
           "name": "admin",
-          "isMut": true,
-          "isSigner": true
+          "writable": true,
+          "signer": true
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
       ],
       "args": [
         {
-          "name": "icoAmount",
+          "name": "ico_amount",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "buyWithSol",
+      "name": "update_data",
+      "discriminator": [
+        62,
+        209,
+        63,
+        231,
+        204,
+        93,
+        148,
+        123
+      ],
       "accounts": [
         {
-          "name": "icoAtaForIcoProgram",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "data",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "icoMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "icoAtaForUser",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
+          "writable": true
         },
         {
           "name": "admin",
-          "isMut": true,
-          "isSigner": false
+          "writable": true,
+          "signer": true
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "icoAtaForIcoProgramBump",
-          "type": "u8"
-        },
-        {
-          "name": "solAmount",
-          "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "buyWithUsdt",
-      "accounts": [
-        {
-          "name": "icoAtaForIcoProgram",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "data",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "icoMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "icoAtaForUser",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "usdtAtaForUser",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "usdtAtaForAdmin",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "icoAtaForIcoProgramBump",
-          "type": "u8"
-        },
-        {
-          "name": "usdtAmount",
-          "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "updateData",
-      "accounts": [
-        {
-          "name": "data",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "admin",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "solPrice",
+          "name": "sol_price",
           "type": "u64"
         },
         {
-          "name": "usdtPrice",
+          "name": "usdt_price",
           "type": "u64"
         }
       ]
     }
   ],
   "accounts": [
+    {
+      "name": "Data",
+      "discriminator": [
+        206,
+        156,
+        59,
+        188,
+        18,
+        79,
+        240,
+        232
+      ]
+    }
+  ],
+  "types": [
     {
       "name": "Data",
       "type": {
@@ -259,7 +375,7 @@
           },
           {
             "name": "admin",
-            "type": "publicKey"
+            "type": "pubkey"
           }
         ]
       }

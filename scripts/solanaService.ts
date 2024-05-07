@@ -1,8 +1,8 @@
 import * as web3 from "@solana/web3.js";
-import * as anchor from "@project-serum/anchor";
-import { AnchorProvider } from "@project-serum/anchor";
+import * as anchor from "@coral-xyz/anchor";
+import { AnchorProvider } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
-import NodeWallet from "@project-serum/anchor/dist/cjs/nodewallet";
+import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import tokenProgramIDL from "../target/idl/token_program.json";
 import { TOKEN_PROGRAM_ID } from "./constant";
 import * as fs from "fs";

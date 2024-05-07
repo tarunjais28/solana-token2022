@@ -1,11 +1,10 @@
-import * as anchor from "@project-serum/anchor";
+import * as anchor from "@coral-xyz/anchor";
 import {
   getProvider,
-  tokenProgramID,
   tokenProgramInterface,
 } from "./solanaService";
 import { TokenProgram } from "../target/types/token_program";
-import { Program } from "@project-serum/anchor";
+import { Program } from "@coral-xyz/anchor";
 import { BN } from "bn.js";
 import {
   TOKEN_2022_PROGRAM_ID,
@@ -31,7 +30,6 @@ const { provider }: any = getProvider();
 if (!provider) throw new Error("Provider not available");
 let program: any = new anchor.Program(
   tokenProgramInterface,
-  tokenProgramID,
   provider,
 ) as Program<TokenProgram>;
 
@@ -99,22 +97,32 @@ const fetchMaintainers = async () => {
 const createToken = async () => {
   let createTokenParams = {
     name: TEST_TOKEN,
+    symbol: "tes",
+    uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
     decimals: 9,
     royalty: 1,
     tokensPerSol: new BN(150),
   };
 
-  await program.methods
-    .create(createTokenParams)
-    .accounts({
-      maintainers: pdaMaintainers,
-      config: pdaConfig,
-      mintAccount,
-      tokenProgram: TOKEN_2022_PROGRAM_ID,
-      payer: AdminAddress,
-      systemProgram: anchor.web3.SystemProgram.programId,
-    })
-    .rpc();
+  console.log({
+    maintainers: pdaMaintainers,
+    config: pdaConfig,
+    mintAccount,
+    tokenProgram: TOKEN_2022_PROGRAM_ID,
+    payer: AdminAddress,
+    systemProgram: anchor.web3.SystemProgram.programId,
+  });
+  // await program.methods
+  //   .create(createTokenParams)
+  //   .accounts({
+  //     maintainers: pdaMaintainers,
+  //     config: pdaConfig,
+  //     mintAccount,
+  //     tokenProgram: TOKEN_2022_PROGRAM_ID,
+  //     payer: AdminAddress,
+  //     systemProgram: anchor.web3.SystemProgram.programId,
+  //   })
+  //   .rpc();
 };
 
 const initResources = async () => {
@@ -213,31 +221,31 @@ const mint = async () => {
     amount: new BN((1000000 * LAMPORTS_PER_SOL * 40) / 100),
   };
 
-  // const rawPayerKeypair = JSON.parse(
-  //   fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
-  // );
-  // const adminKey = anchor.web3.Keypair.fromSecretKey(
-  //   Buffer.from(rawPayerKeypair),
-  // );
+  const rawPayerKeypair = JSON.parse(
+    fs.readFileSync("/home/tarunjais/.config/solana/id.json", "utf-8"),
+  );
+  const adminKey = anchor.web3.Keypair.fromSecretKey(
+    Buffer.from(rawPayerKeypair),
+  );
 
-  // // Creating associated token for user for Test
-  // let userATA = await getOrCreateAssociatedTokenAccount(
-  //   provider.connection,
-  //   adminKey,
-  //   mintAccount,
-  //   user,
-  //   undefined,
-  //   undefined,
-  //   undefined,
-  //   TOKEN_2022_PROGRAM_ID,
-  // );
+  // Creating associated token for user for Test
+  let userATA = await getOrCreateAssociatedTokenAccount(
+    provider.connection,
+    adminKey,
+    mintAccount,
+    AdminAddress,
+    undefined,
+    undefined,
+    undefined,
+    TOKEN_2022_PROGRAM_ID,
+  );
 
   await program.methods
     .mintToken(tokenParams)
     .accounts({
       maintainers: pdaMaintainers,
       mintAccount,
-      toAccount: pdaEscrow,
+      toAccount: userATA.address,
       authority: AdminAddress,
       tokenProgram: TOKEN_2022_PROGRAM_ID,
     })

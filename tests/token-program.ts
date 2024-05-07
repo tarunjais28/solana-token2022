@@ -1,5 +1,5 @@
-import * as anchor from "@project-serum/anchor";
-import { Program } from "@project-serum/anchor";
+import * as anchor from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
 import {
   TOKEN_2022_PROGRAM_ID,
   getOrCreateAssociatedTokenAccount,
@@ -8,8 +8,9 @@ import {
 } from "@solana/spl-token";
 import { BN } from "bn.js";
 import { assert } from "chai";
-import { TokenProgram } from "../target/types/token_program";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { TokenProgram } from '../target/types/token_program';
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { it } from "node:test";
 
 // Create test keypairs
 const admin = anchor.web3.Keypair.generate();
@@ -317,6 +318,8 @@ describe("token_program", () => {
 
     let createTokenParams = {
       name: TEST_TOKEN,
+      symbol: "tes",
+      uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 9,
       royalty: 1,
       tokensPerSol: TOKEN_AMOUNT,
@@ -335,6 +338,8 @@ describe("token_program", () => {
     // Creating another token
     createTokenParams = {
       name: TEST_1_TOKEN,
+      symbol: "tes-1",
+      uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
       decimals: 1,
       royalty: 1,
       tokensPerSol: TOKEN_AMOUNT,

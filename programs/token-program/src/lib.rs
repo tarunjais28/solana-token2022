@@ -1,10 +1,14 @@
 use crate::{constants::*, enums::*, errors::*, events::*, instructions::*, states::*, structs::*};
-use anchor_lang::{prelude::*, solana_program::program::invoke};
+use anchor_lang::{
+    prelude::*,
+    solana_program::entrypoint::ProgramResult,
+};
 use anchor_spl::{
     token_2022::{self, Burn, MintTo, Token2022, TransferChecked},
-    token_interface::{Mint, TokenAccount, TokenInterface},
+    token_interface::{
+        token_metadata_initialize, Mint, TokenAccount, TokenInterface, TokenMetadataInitialize,
+    },
 };
-use spl_token_2022::{extension::ExtensionType, state::Mint as MintState};
 pub use structs::TokenParams;
 
 mod constants;
@@ -15,7 +19,7 @@ mod instructions;
 mod states;
 mod structs;
 
-declare_id!("57jrYgUDnB32ukmkQ9cKXyjZ99nBWE2JTD7w573uYexY");
+declare_id!("G6RQdQFBTM3UjCvBWyCKpguz2QKzG8FxDA6ZfKrnUpxz");
 
 #[program]
 pub mod token_program {

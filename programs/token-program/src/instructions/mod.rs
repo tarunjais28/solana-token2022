@@ -12,10 +12,11 @@ mod maintainers;
 mod mint;
 mod transfer;
 mod update_config;
+mod utils;
 mod whitelist;
 
 pub use {
     burn::*, burn_from::*, buy_with_sol::*, claim::*, create_token::*, force_transfer::*,
-    init_resources::*, initialize::*, maintainers::*, mint::*, transfer::*, update_config::*,
-    whitelist::*,
+    init_resources::*, initialize::*, maintainers::*, mint::*, transfer::*,
+    update_config::*, utils::*, whitelist::*,
 };

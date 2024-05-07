@@ -13,7 +13,6 @@ import {
 
 import { PublicKey } from "@solana/web3.js";
 
-import { ChainName } from "@certusone/wormhole-sdk";
 import BN from "bn.js";
 
 const callTheFunction = async () => {
@@ -21,7 +20,7 @@ const callTheFunction = async () => {
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // await initTokenProgram();
-  // await fetchMaintainers();
+  await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
   // await initResources();
@@ -29,7 +28,7 @@ const callTheFunction = async () => {
   // await fetchBalances();
   // await buyWithSol();
   // await getBaseKeys();
-  await fetchContractBalances();
+  // await fetchContractBalances();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");
