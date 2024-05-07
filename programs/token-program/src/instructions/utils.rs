@@ -7,6 +7,7 @@ use anchor_lang::{
     Lamports,
 };
 
+#[inline(never)]
 pub fn update_account_lamports_to_minimum_balance<'info>(
     account: AccountInfo<'info>,
     payer: AccountInfo<'info>,

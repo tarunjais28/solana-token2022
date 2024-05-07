@@ -23,7 +23,7 @@ const callTheFunction = async () => {
   // await initTokenProgram();
   // await fetchMaintainers();
   // await addSubAdmins();
-  // await createToken();
+  await createToken();
   // await setConfig();
   // await initResources();
   // await mint();

@@ -8,19 +8,19 @@ pub fn create_token(ctx: Context<CreateToken>, params: CreateTokenParams) -> Res
     // Ensuring authorized sender
     require!(sub_admins.contains(&caller), CustomError::Unauthorized);
 
-    // let ix = spl_token_2022::instruction::initialize_permanent_delegate(
-    //     ctx.accounts.token_program.key,
-    //     &ctx.accounts.mint_account.key(),
-    //     &ctx.accounts.mint_account.key(),
-    // )?;
+    let ix = spl_token_2022::instruction::initialize_permanent_delegate(
+        ctx.accounts.token_program.key,
+        &ctx.accounts.mint_account.key(),
+        &ctx.accounts.mint_account.key(),
+    )?;
 
-    // anchor_lang::solana_program::program::invoke(
-    //     &ix,
-    //     &[
-    //         ctx.accounts.token_program.to_account_info(),
-    //         ctx.accounts.mint_account.to_account_info(),
-    //     ],
-    // )?;
+    anchor_lang::solana_program::program::invoke(
+        &ix,
+        &[
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.mint_account.to_account_info(),
+        ],
+    )?;
     
     ctx.accounts.initialize_token_metadata(
         params.clone(),
@@ -81,6 +81,7 @@ pub struct CreateToken<'info> {
 }
 
 impl<'info> CreateToken<'info> {
+    #[inline(never)]
     fn initialize_token_metadata(
         &self,
         params: CreateTokenParams,
