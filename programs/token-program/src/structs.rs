@@ -1,8 +1,7 @@
 use super::*;
 
 /// The struct containing instructions for creating tokens
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct CreateTokenParams {
     /// Token Name
     pub name: String,
@@ -24,8 +23,7 @@ pub struct CreateTokenParams {
 }
 
 /// The struct containing instructions for mint and burn tokens
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct TokenParams {
     /// Token Name
     pub name: String,
@@ -35,8 +33,7 @@ pub struct TokenParams {
 }
 
 /// The struct containing instructions for transferring tokens
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct TransferParams {
     /// Token Name
     pub token: String,
@@ -49,8 +46,7 @@ pub struct TransferParams {
 }
 
 /// The struct containing instructions for force transferring tokens
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct ForceTransferParams {
     /// Token Name
     pub token: String,
@@ -66,8 +62,7 @@ pub struct ForceTransferParams {
 }
 
 /// The struct containing instructions for whitelisting
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct WhitelistParams {
     /// Token Name
     pub token: String,
@@ -77,8 +72,7 @@ pub struct WhitelistParams {
 }
 
 /// The struct containing instructions for transferring tokens
-#[account]
-#[derive(Debug, Default)]
+#[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct BuyWithSolParams {
     /// Token Name
     pub token: String,
