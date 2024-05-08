@@ -3,6 +3,9 @@ import { PublicKey } from "@solana/web3.js";
 export const TOKEN_PROGRAM_ID: string =
   "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX";
 
+  export const RECEIVER_PROGRAM_ID: string =
+  "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX";
+
 export const AdminAddress: PublicKey = new PublicKey(
   "FDFAEes1Tc4WbZeD6aJ25VHPUiUJVFDzUW3abiDRKmXD",
 );
@@ -22,3 +25,4 @@ export const TEST = Buffer.from(TEST_TOKEN);
 export const WHITELIST = Buffer.from("whitelist");
 export const ESCROW = Buffer.from("escrow");
 export const VAULT = Buffer.from("vault");
+export const USER_DATA = Buffer.from("user_data");

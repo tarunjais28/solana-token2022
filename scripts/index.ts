@@ -12,18 +12,20 @@ import {
   setConfig,
 } from "./token-program";
 
-import { PublicKey } from "@solana/web3.js";
-
-import BN from "bn.js";
+import {
+  initReceiverProgram,
+  getReceiverBaseKeys,
+  receive,
+} from "./receiver";
 
 const callTheFunction = async () => {
   console.log("Triggering functions , please wait !");
   // ==============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  await initTokenProgram();
+  // await initTokenProgram();
   // await fetchMaintainers();
   // await addSubAdmins();
-  await createToken();
+  // await createToken();
   // await setConfig();
   // await initResources();
   // await mint();
@@ -31,6 +33,10 @@ const callTheFunction = async () => {
   // await buyWithSol();
   // await getBaseKeys();
   // await fetchContractBalances();
+
+  // await initReceiverProgram();
+  // await getReceiverBaseKeys();
+  await receive();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");

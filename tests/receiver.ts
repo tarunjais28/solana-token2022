@@ -2,9 +2,6 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import {
   TOKEN_2022_PROGRAM_ID,
-  getOrCreateAssociatedTokenAccount,
-  getAssociatedTokenAddress,
-  getAccount,
 } from "@solana/spl-token";
 import { BN } from "bn.js";
 import { assert } from "chai";
@@ -19,12 +16,6 @@ const user1 = anchor.web3.Keypair.generate();
 const user2 = anchor.web3.Keypair.generate();
 const vault = anchor.web3.Keypair.generate();
 const mintAuthority = anchor.web3.Keypair.generate();
-
-// Create constant amount fields
-const MINT_AMOUNT = new BN(1000 * LAMPORTS_PER_SOL);
-const BURN_AMOUNT = new BN(600 * LAMPORTS_PER_SOL);
-const BURN_FROM_AMOUNT = new BN(200 * LAMPORTS_PER_SOL);
-const TOKEN_AMOUNT = new BN(150);
 
 // Constant seeds
 const MAINTAINERS = Buffer.from("maintainers");

@@ -4,6 +4,7 @@ import { AnchorProvider } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import tokenProgramIDL from "../target/idl/token_program.json";
+import receiverProgramIDL from "../target/idl/receiver.json";
 import { TOKEN_PROGRAM_ID } from "./constant";
 import * as fs from "fs";
 
@@ -13,12 +14,14 @@ export const tokenProgramInterface = JSON.parse(
   JSON.stringify(tokenProgramIDL),
 );
 
+export const receiverProgramInterface = JSON.parse(
+  JSON.stringify(receiverProgramIDL),
+);
+
 const solanaNetwork = web3.clusterApiUrl("devnet");
 const opts: any = {
   preflightCommitment: "processed",
 };
-const GLOBAL_CONFIG = Buffer.from("global_config");
-const AGENT = Buffer.from("agent");
 
 export const getProvider = (): {
   provider: AnchorProvider;
