@@ -1,0 +1,564 @@
+{
+  "address": "F3gxJsG99VG66BqBNwUHFf9Qqzy9XxWYiAuFJzQwZcE2",
+  "metadata": {
+    "name": "receiver",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "add_sub_admin_accounts",
+      "discriminator": [
+        130,
+        141,
+        64,
+        137,
+        151,
+        104,
+        59,
+        232
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "addresses",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "init",
+      "discriminator": [
+        220,
+        59,
+        207,
+        236,
+        108,
+        250,
+        47,
+        100
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrow_key",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "escrow_key",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "manage_admin",
+      "discriminator": [
+        141,
+        136,
+        128,
+        177,
+        111,
+        187,
+        95,
+        148
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "address",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "receive",
+      "discriminator": [
+        86,
+        17,
+        255,
+        171,
+        17,
+        17,
+        187,
+        219
+      ],
+      "accounts": [
+        {
+          "name": "user_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrow_account",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_ata",
+          "writable": true
+        },
+        {
+          "name": "escrow_key",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "remove_sub_admin_accounts",
+      "discriminator": [
+        152,
+        249,
+        193,
+        89,
+        66,
+        185,
+        139,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "addresses",
+          "type": {
+            "vec": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_escrow",
+      "discriminator": [
+        252,
+        228,
+        127,
+        1,
+        60,
+        43,
+        54,
+        28
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrow_key",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "address",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EscrowKey",
+      "discriminator": [
+        116,
+        183,
+        59,
+        90,
+        150,
+        117,
+        21,
+        24
+      ]
+    },
+    {
+      "name": "Maintainers",
+      "discriminator": [
+        201,
+        217,
+        234,
+        104,
+        25,
+        149,
+        168,
+        56
+      ]
+    },
+    {
+      "name": "UserData",
+      "discriminator": [
+        139,
+        248,
+        167,
+        203,
+        253,
+        220,
+        210,
+        221
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Error: Unauthorized User!"
+    },
+    {
+      "code": 6001,
+      "name": "UnknownReceiver",
+      "msg": "Error: Unknown Receiver!"
+    }
+  ],
+  "types": [
+    {
+      "name": "EscrowKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "key",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Maintainers",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sub_admins",
+            "docs": [
+              "Sub Admins"
+            ],
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "admin",
+            "docs": [
+              "Admin"
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "User",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "users",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "User"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "ESCROW_TAG",
+      "type": "bytes",
+      "value": "[101, 115, 99, 114, 111, 119]"
+    },
+    {
+      "name": "MAINTAINERS_TAG",
+      "type": "bytes",
+      "value": "[109, 97, 105, 110, 116, 97, 105, 110, 101, 114, 115]"
+    },
+    {
+      "name": "USER_DATA_TAG",
+      "type": "bytes",
+      "value": "[117, 115, 101, 114, 95, 100, 97, 116, 97]"
+    }
+  ]
+}
