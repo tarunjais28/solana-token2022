@@ -10,6 +10,7 @@ import {
   initResources,
   fetchContractBalances,
   setConfig,
+  setEscrow,
 } from "./token-program";
 
 import { initReceiverProgram, getReceiverBaseKeys, receive } from "./receiver";
@@ -22,6 +23,7 @@ const callTheFunction = async () => {
   // await fetchMaintainers();
   // await addSubAdmins();
   // await createToken();
+  // await setEscrow();
   // await setConfig();
   // await initResources();
   await mint();

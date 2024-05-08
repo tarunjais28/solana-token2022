@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-token_program = "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX"
+token_program = "3vrW5rRTncZS9YjjffZGNGAYCGgMwLW9otMcDSparg6c"
 receiver = "F3gxJsG99VG66BqBNwUHFf9Qqzy9XxWYiAuFJzQwZcE2"
 ico = "73i8QfnJhvrnUJw1Edg3VhV8ttdK9x9pP3jgL8PaUL2t"
 

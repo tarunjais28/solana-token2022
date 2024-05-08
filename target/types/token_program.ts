@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/token_program.json`.
  */
 export type TokenProgram = {
-  "address": "v81yorXjyCwZA3GKEccnsPg2je2fq7QDAkcjHawcjtX",
+  "address": "3vrW5rRTncZS9YjjffZGNGAYCGgMwLW9otMcDSparg6c",
   "metadata": {
     "name": "tokenProgram",
     "version": "0.1.0",

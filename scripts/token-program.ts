@@ -55,6 +55,11 @@ const [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
   program.programId,
 );
 
+const [pdaEscrowKey] = anchor.web3.PublicKey.findProgramAddressSync(
+  [ESCROW],
+  program.programId,
+);
+
 const [pdaVault] = anchor.web3.PublicKey.findProgramAddressSync(
   [VAULT, TEST],
   program.programId,
@@ -94,7 +99,7 @@ const fetchMaintainers = async () => {
 const createToken = async () => {
   let createTokenParams = {
     name: TEST_TOKEN,
-    symbol: "tes",
+    symbol: "mdpnd",
     uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
     decimals: 9,
     royalty: 1,
@@ -148,6 +153,7 @@ const getBaseKeys = async () => {
   console.log("maintainers", pdaMaintainers.toString());
   console.log("pdaWhitelist", pdaWhitelist.toString());
   console.log("pdaEscrow", pdaEscrow.toString());
+  console.log("pdaEscrowKey", pdaEscrowKey.toString());
   console.log("pdaVault", pdaVault.toString());
 
   // let supply = await provider.connection.getTokenSupply(mintAccount);
@@ -212,6 +218,18 @@ const updateTokenProgramAdmin = async (admin: PublicKey) => {
     .accounts({
       maintainers: pdaMaintainers,
       authority: AdminAddress,
+    })
+    .rpc();
+};
+
+const setEscrow = async () => {
+  await program.methods
+    .updateEscrow(AdminAddress)
+    .accounts({
+      maintainers: pdaMaintainers,
+      escrowKey: pdaEscrowKey,
+      authority: AdminAddress,
+      SystemProgram: anchor.web3.SystemProgram.programId,
     })
     .rpc();
 };
@@ -297,8 +315,10 @@ const buyWithSol = async () => {
       user: AdminAddress,
       whitelist: pdaWhitelist,
       escrowAccount: pdaEscrow,
+      escrowKey: pdaEscrowKey,
+      adminAccount: AdminAddress,
       vaultAccount: pdaVault,
-      vaultAta,
+      userAta: userATA.address,
       tokenProgram: TOKEN_2022_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
     })
@@ -318,4 +338,5 @@ export {
   getBaseKeys,
   fetchContractBalances,
   setConfig,
+  setEscrow,
 };
