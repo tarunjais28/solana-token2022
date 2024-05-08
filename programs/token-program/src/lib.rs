@@ -105,4 +105,8 @@ pub mod token_program {
     pub fn buy_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) -> Result<()> {
         instructions::buy_token_with_sol(ctx, params)
     }
+
+    pub fn update_escrow(ctx: Context<SetEscrow>, address: Pubkey) -> Result<()> {
+        instructions::set_escrow(ctx, address)
+    }
 }

@@ -14,9 +14,10 @@ mod transfer;
 mod update_config;
 mod utils;
 mod whitelist;
+mod set_escrow;
 
 pub use {
     burn::*, burn_from::*, buy_with_sol::*, claim::*, create_token::*, force_transfer::*,
     init_resources::*, initialize::*, maintainers::*, mint::*, transfer::*, update_config::*,
-    utils::*, whitelist::*,
+    utils::*, whitelist::*, set_escrow::*
 };

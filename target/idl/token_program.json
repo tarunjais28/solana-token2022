@@ -359,6 +359,28 @@
           }
         },
         {
+          "name": "admin_account",
+          "writable": true
+        },
+        {
+          "name": "escrow_key",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "user",
           "writable": true,
           "signer": true
@@ -1285,6 +1307,78 @@
       ]
     },
     {
+      "name": "update_escrow",
+      "discriminator": [
+        252,
+        228,
+        127,
+        1,
+        60,
+        43,
+        54,
+        28
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrow_key",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "address",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "update_royalty",
       "discriminator": [
         161,
@@ -1446,6 +1540,19 @@
     }
   ],
   "accounts": [
+    {
+      "name": "EscrowKey",
+      "discriminator": [
+        116,
+        183,
+        59,
+        90,
+        150,
+        117,
+        21,
+        24
+      ]
+    },
     {
       "name": "Maintainers",
       "discriminator": [
@@ -1673,38 +1780,18 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InsufficientFunds",
-      "msg": "Error: Your balance is not enough!"
-    },
-    {
-      "code": 6001,
       "name": "AmountCantBeZero",
       "msg": "Error: Amount can't be zero!"
     },
     {
-      "code": 6002,
-      "name": "CountryCodeAuthorizationFailed",
-      "msg": "Error: Country_code authentication failed!"
-    },
-    {
-      "code": 6003,
+      "code": 6001,
       "name": "Unauthorized",
       "msg": "Error: Unauthorized User!"
     },
     {
-      "code": 6004,
-      "name": "TokenLimitExceeded",
-      "msg": "Error: Token Limit exceeded!"
-    },
-    {
-      "code": 6005,
-      "name": "AccountFrozen",
-      "msg": "Error: Account is frozen!"
-    },
-    {
-      "code": 6006,
-      "name": "BalanceFrozen",
-      "msg": "Error: Balance is frozen!"
+      "code": 6002,
+      "name": "UnknownReceiver",
+      "msg": "Error: Unknown Receiver!"
     }
   ],
   "types": [
@@ -1833,6 +1920,18 @@
               "Token to be distributed per Sol"
             ],
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EscrowKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "key",
+            "type": "pubkey"
           }
         ]
       }

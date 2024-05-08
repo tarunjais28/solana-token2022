@@ -86,3 +86,8 @@ pub struct BuyWithSolParams {
     /// Sol Amount
     pub sol_amount: u64,
 }
+
+#[account]
+pub struct EscrowKey {
+    pub key: Pubkey,
+}

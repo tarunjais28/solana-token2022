@@ -13,7 +13,7 @@ pub fn buy_token_with_sol(ctx: Context<BuyWithSol>, params: BuyWithSolParams) ->
     // Transfer sols
     let cpi_accounts = anchor_lang::system_program::Transfer {
         from: ctx.accounts.user.to_account_info(),
-        to: ctx.accounts.escrow_account.to_account_info(),
+        to: ctx.accounts.admin_account.to_account_info(),
     };
     anchor_lang::system_program::transfer(
         CpiContext::new_with_signer(cpi_program.clone(), cpi_accounts, &signer),
@@ -109,6 +109,19 @@ pub struct BuyWithSol<'info> {
         bump,
     )]
     pub vault_account: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    /// CHECK: Escrow Account where the sols will be transferred
+    #[account(
+        mut,
+        constraint = escrow_key.key == admin_account.key() @CustomError::UnknownReceiver
+    )]
+    pub admin_account: AccountInfo<'info>,
+
+    #[account(
+        seeds = [ESCROW_TAG],
+        bump,
+    )]
+    pub escrow_key: Box<Account<'info, EscrowKey>>,
 
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]

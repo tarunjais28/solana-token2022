@@ -365,6 +365,28 @@ export type TokenProgram = {
           }
         },
         {
+          "name": "adminAccount",
+          "writable": true
+        },
+        {
+          "name": "escrowKey",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "user",
           "writable": true,
           "signer": true
@@ -1291,6 +1313,78 @@ export type TokenProgram = {
       ]
     },
     {
+      "name": "updateEscrow",
+      "discriminator": [
+        252,
+        228,
+        127,
+        1,
+        60,
+        43,
+        54,
+        28
+      ],
+      "accounts": [
+        {
+          "name": "maintainers",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  105,
+                  110,
+                  116,
+                  97,
+                  105,
+                  110,
+                  101,
+                  114,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrowKey",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  115,
+                  99,
+                  114,
+                  111,
+                  119
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "address",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "updateRoyalty",
       "discriminator": [
         161,
@@ -1452,6 +1546,19 @@ export type TokenProgram = {
     }
   ],
   "accounts": [
+    {
+      "name": "escrowKey",
+      "discriminator": [
+        116,
+        183,
+        59,
+        90,
+        150,
+        117,
+        21,
+        24
+      ]
+    },
     {
       "name": "maintainers",
       "discriminator": [
@@ -1679,38 +1786,18 @@ export type TokenProgram = {
   "errors": [
     {
       "code": 6000,
-      "name": "insufficientFunds",
-      "msg": "Error: Your balance is not enough!"
-    },
-    {
-      "code": 6001,
       "name": "amountCantBeZero",
       "msg": "Error: Amount can't be zero!"
     },
     {
-      "code": 6002,
-      "name": "countryCodeAuthorizationFailed",
-      "msg": "Error: Country_code authentication failed!"
-    },
-    {
-      "code": 6003,
+      "code": 6001,
       "name": "unauthorized",
       "msg": "Error: Unauthorized User!"
     },
     {
-      "code": 6004,
-      "name": "tokenLimitExceeded",
-      "msg": "Error: Token Limit exceeded!"
-    },
-    {
-      "code": 6005,
-      "name": "accountFrozen",
-      "msg": "Error: Account is frozen!"
-    },
-    {
-      "code": 6006,
-      "name": "balanceFrozen",
-      "msg": "Error: Balance is frozen!"
+      "code": 6002,
+      "name": "unknownReceiver",
+      "msg": "Error: Unknown Receiver!"
     }
   ],
   "types": [
@@ -1839,6 +1926,18 @@ export type TokenProgram = {
               "Token to be distributed per Sol"
             ],
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "escrowKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "key",
+            "type": "pubkey"
           }
         ]
       }

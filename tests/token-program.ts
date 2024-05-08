@@ -9,7 +9,7 @@ import {
 import { BN } from "bn.js";
 import { assert } from "chai";
 import { TokenProgram } from "../target/types/token_program";
-import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey, SystemProgram } from "@solana/web3.js";
 import { it } from "node:test";
 
 // Create test keypairs
@@ -51,6 +51,7 @@ describe("token_program", () => {
     pdaWhitelist,
     pdaEscrow,
     pdaVault,
+    pdaEscrowKey,
     mintAccount = null;
 
   const confirmTransaction = async (tx) => {
@@ -96,6 +97,21 @@ describe("token_program", () => {
       .rpc();
 
     await confirmTransaction(init);
+  };
+
+  const setEscrow = async (address) => {
+    let setEscrow = await program.methods
+      .updateEscrow(address)
+      .accounts({
+        maintainers: pdaMaintainers,
+        escrowKey: pdaEscrowKey,
+        authority: admin.publicKey,
+        SystemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([admin])
+      .rpc();
+
+    await confirmTransaction(setEscrow);
   };
 
   const mint = async (tokenParams, user1ATA, signer) => {
@@ -215,6 +231,8 @@ describe("token_program", () => {
         user: user.publicKey,
         whitelist: pdaWhitelist,
         escrowAccount: pdaEscrow,
+        escrowKey: pdaEscrowKey,
+        adminAccount: vault.publicKey,
         userAta,
         vaultAccount: pdaVault,
         tokenProgram: TOKEN_2022_PROGRAM_ID,
@@ -366,39 +384,22 @@ describe("token_program", () => {
     );
   });
 
-  // it("Test Set Config", async () => {
-  //   [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
-  //     [CONFIG, TEST],
-  //     program.programId,
-  //   );
+  it("Test Update Escrow Account", async () => {
+    await setEscrow(vault.publicKey);
 
-  //   let royalty = 1;
-  //   let tokensPerSol = TOKEN_AMOUNT;
-
-  //   await setConfig(TEST_TOKEN, royalty, tokensPerSol);
-
-  //   // Check the configuration after transaction
-  //   let config = await program.account.tokenConfiguration.fetch(pdaConfig);
-  //   assert.equal(config.royalty, royalty);
-  //   assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
-
-  //   // For Test-1 token
-  //   [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
-  //     [CONFIG, TEST_1],
-  //     program.programId,
-  //   );
-
-  //   await setConfig(TEST_1_TOKEN, royalty, tokensPerSol);
-
-  //   // Check the configuration after transaction
-  //   config = await program.account.tokenConfiguration.fetch(pdaConfig);
-  //   assert.equal(config.royalty, royalty);
-  //   assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
-  // });
+    // let escrow = await program.account.escrowKey.fetch(pdaEscrowKey);
+    // console.log(escrow.key.toBase58());
+    // assert.equal(escrow.key.toBase58(), vault.publicKey.toBase58());
+  });
 
   it("Test Init Resources", async () => {
     [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(
       [ESCROW, TEST],
+      program.programId,
+    );
+
+    [pdaEscrowKey] = anchor.web3.PublicKey.findProgramAddressSync(
+      [ESCROW],
       program.programId,
     );
 
