@@ -5,7 +5,6 @@ use anchor_spl::{
     token_2022::{self, Burn, MintTo, Token2022, TransferChecked},
     token_interface::{token_metadata_initialize, Mint, TokenAccount, TokenMetadataInitialize},
 };
-use spl_token_2022::{extension::ExtensionType, state::Mint as MintState};
 pub use structs::TokenParams;
 
 mod constants;
@@ -85,15 +84,6 @@ pub mod token_program {
 
     pub fn claim(ctx: Context<ClaimTokens>, token: String) -> Result<()> {
         instructions::claim_royalty(ctx, token)
-    }
-
-    pub fn set_config(
-        ctx: Context<UpdateTokenConfig>,
-        token: String,
-        royalty: u8,
-        tokens_per_sol: u64,
-    ) -> Result<()> {
-        instructions::add_config(ctx, token, royalty, tokens_per_sol)
     }
 
     pub fn update_royalty(

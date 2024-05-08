@@ -3,15 +3,8 @@ import { getProvider, receiverProgramInterface } from "./solanaService";
 import { Receiver } from "../target/types/receiver";
 import { Program } from "@coral-xyz/anchor";
 import { BN } from "bn.js";
-import {
-  TOKEN_2022_PROGRAM_ID,
-} from "@solana/spl-token";
-import {
-  AdminAddress,
-  MAINTAINERS,
-  ESCROW,
-  USER_DATA,
-} from "./constant";
+import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
+import { AdminAddress, MAINTAINERS, ESCROW, USER_DATA } from "./constant";
 import { PublicKey } from "@solana/web3.js";
 
 const { provider }: any = getProvider();
@@ -53,10 +46,10 @@ const initReceiverProgram = async () => {
     .init(AdminAddress)
     .accounts({
       maintainers: pdaMaintainers,
-        escrowKey: pdaEscrow,
-        userData: pdaUsers,
-        authority: AdminAddress,
-        systemProgram: anchor.web3.SystemProgram.programId,
+      escrowKey: pdaEscrow,
+      userData: pdaUsers,
+      authority: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
     })
     .rpc();
 };
@@ -69,13 +62,13 @@ const fetchMaintainers = async () => {
 
 const setEscrow = async (address: PublicKey) => {
   await program.methods
-      .updateEscrow(address)
-      .accounts({
-        maintainers: pdaMaintainers,
-        escrowKey: pdaEscrow,
-        authority: AdminAddress,
-      })
-      .rpc();
+    .updateEscrow(address)
+    .accounts({
+      maintainers: pdaMaintainers,
+      escrowKey: pdaEscrow,
+      authority: AdminAddress,
+    })
+    .rpc();
 };
 
 const getReceiverBaseKeys = async () => {
@@ -84,7 +77,7 @@ const getReceiverBaseKeys = async () => {
   console.log("pdaEscrow", pdaEscrow.toString());
 
   let escrow = await program.account.escrowKey.fetch(pdaEscrow);
-    console.log("escrow_account", escrow.key.toBase58());
+  console.log("escrow_account", escrow.key.toBase58());
 };
 
 const fetchUsers = async () => {
@@ -107,16 +100,16 @@ const receive = async () => {
   let amount = new BN(100);
 
   await program.methods
-      .receive(amount)
-      .accounts({
-        userData: pdaUsers,
-        user: AdminAddress,
-        escrowKey: pdaEscrow,
-        escrowAccount: AdminAddress,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .rpc();
+    .receive(amount)
+    .accounts({
+      userData: pdaUsers,
+      user: AdminAddress,
+      escrowKey: pdaEscrow,
+      escrowAccount: AdminAddress,
+      tokenProgram: TOKEN_2022_PROGRAM_ID,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .rpc();
 };
 
 export {

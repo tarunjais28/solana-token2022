@@ -97,6 +97,8 @@ const createToken = async () => {
     symbol: "tes",
     uri: "https://arweave.net/dEGah51x5Dlvbfcl8UUGz52KovgWh6QmrYIW48hi244?ext=png",
     decimals: 9,
+    royalty: 1,
+    tokensPerSol: new BN(150),
   };
 
   await program.methods

@@ -1,8 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import {
-  TOKEN_2022_PROGRAM_ID,
-} from "@solana/spl-token";
+import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { BN } from "bn.js";
 import { assert } from "chai";
 import { Receiver } from "../target/types/receiver";

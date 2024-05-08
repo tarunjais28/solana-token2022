@@ -81,21 +81,6 @@ describe("token_program", () => {
     await confirmTransaction(createToken);
   };
 
-  const setConfig = async (token, royalty, tokensPerSol) => {
-    let set = await program.methods
-      .setConfig(token, royalty, tokensPerSol)
-      .accounts({
-        maintainers: pdaMaintainers,
-        config: pdaConfig,
-        caller: admin.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .signers([admin])
-      .rpc();
-
-    await confirmTransaction(set);
-  };
-
   const initResources = async (token) => {
     let init = await program.methods
       .initResources(token)
@@ -381,35 +366,35 @@ describe("token_program", () => {
     );
   });
 
-  it("Test Set Config", async () => {
-    [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
-      [CONFIG, TEST],
-      program.programId,
-    );
+  // it("Test Set Config", async () => {
+  //   [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
+  //     [CONFIG, TEST],
+  //     program.programId,
+  //   );
 
-    let royalty = 1;
-    let tokensPerSol = TOKEN_AMOUNT;
+  //   let royalty = 1;
+  //   let tokensPerSol = TOKEN_AMOUNT;
 
-    await setConfig(TEST_TOKEN, royalty, tokensPerSol);
+  //   await setConfig(TEST_TOKEN, royalty, tokensPerSol);
 
-    // Check the configuration after transaction
-    let config = await program.account.tokenConfiguration.fetch(pdaConfig);
-    assert.equal(config.royalty, royalty);
-    assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
+  //   // Check the configuration after transaction
+  //   let config = await program.account.tokenConfiguration.fetch(pdaConfig);
+  //   assert.equal(config.royalty, royalty);
+  //   assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
 
-    // For Test-1 token
-    [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
-      [CONFIG, TEST_1],
-      program.programId,
-    );
+  //   // For Test-1 token
+  //   [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
+  //     [CONFIG, TEST_1],
+  //     program.programId,
+  //   );
 
-    await setConfig(TEST_1_TOKEN, royalty, tokensPerSol);
+  //   await setConfig(TEST_1_TOKEN, royalty, tokensPerSol);
 
-    // Check the configuration after transaction
-    config = await program.account.tokenConfiguration.fetch(pdaConfig);
-    assert.equal(config.royalty, royalty);
-    assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
-  });
+  //   // Check the configuration after transaction
+  //   config = await program.account.tokenConfiguration.fetch(pdaConfig);
+  //   assert.equal(config.royalty, royalty);
+  //   assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
+  // });
 
   it("Test Init Resources", async () => {
     [pdaEscrow] = anchor.web3.PublicKey.findProgramAddressSync(

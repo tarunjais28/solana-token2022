@@ -12,11 +12,7 @@ import {
   setConfig,
 } from "./token-program";
 
-import {
-  initReceiverProgram,
-  getReceiverBaseKeys,
-  receive,
-} from "./receiver";
+import { initReceiverProgram, getReceiverBaseKeys, receive } from "./receiver";
 
 const callTheFunction = async () => {
   console.log("Triggering functions , please wait !");
@@ -28,7 +24,7 @@ const callTheFunction = async () => {
   // await createToken();
   // await setConfig();
   // await initResources();
-  // await mint();
+  await mint();
   // await fetchBalances();
   // await buyWithSol();
   // await getBaseKeys();
@@ -36,7 +32,7 @@ const callTheFunction = async () => {
 
   // await initReceiverProgram();
   // await getReceiverBaseKeys();
-  await receive();
+  // await receive();
 
   console.log("Functions Triggered, success !");
   console.log("sent =>>>>>>>>");

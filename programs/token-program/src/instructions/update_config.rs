@@ -1,31 +1,5 @@
 use super::*;
 
-/// Function to add config
-pub fn add_config(
-    ctx: Context<UpdateTokenConfig>,
-    token: String,
-    royalty: u8,
-    tokens_per_sol: u64,
-) -> Result<()> {
-    let caller = ctx.accounts.caller.to_account_info().key();
-    let sub_admins = &ctx.accounts.maintainers.sub_admins;
-    let config = &mut ctx.accounts.config;
-
-    // Ensuring authorized sender
-    require!(sub_admins.contains(&caller), CustomError::Unauthorized);
-    config.royalty = royalty;
-    config.tokens_per_sol = tokens_per_sol;
-
-    // Emit set config event
-    emit!(SetConfigEvent {
-        token,
-        royalty,
-        tokens_per_sol
-    });
-
-    Ok(())
-}
-
 /// Function to update royalty
 pub fn update_royalty_percentage(
     ctx: Context<UpdateTokenConfig>,
@@ -84,11 +58,9 @@ pub struct UpdateTokenConfig<'info> {
     pub maintainers: Box<Account<'info, Maintainers>>,
 
     #[account(
-        init_if_needed,
+        mut,
         seeds = [CONFIG_TAG, token.as_bytes()],
         bump,
-        payer = caller,
-        space = std::mem::size_of::<TokenConfiguration>() + 8
     )]
     pub config: Box<Account<'info, TokenConfiguration>>,
 

@@ -22,7 +22,7 @@ pub fn mint(ctx: Context<MintToken>, params: TokenParams) -> Result<()> {
     let cpi_accounts = MintTo {
         mint: ctx.accounts.mint_account.to_account_info(),
         to: ctx.accounts.to_account.to_account_info(),
-        authority: ctx.accounts.mint_account.to_account_info(),
+        authority: ctx.accounts.authority.to_account_info(),
     };
 
     token_2022::mint_to(
