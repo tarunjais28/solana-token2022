@@ -9,7 +9,7 @@ import {
   getBaseKeys,
   initResources,
   fetchContractBalances,
-  setConfig
+  setConfig,
 } from "./token-program";
 
 import { PublicKey } from "@solana/web3.js";

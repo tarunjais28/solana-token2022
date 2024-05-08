@@ -10,6 +10,10 @@ pub fn receive_and_store(ctx: Context<Receiver>, amount: u64) -> Result<()> {
 
     let cpi_program = ctx.accounts.token_program.to_account_info();
 
+    msg!("from: {}", ctx.accounts.user.key);
+    msg!("to: {}", ctx.accounts.escrow_account.key);
+    msg!("amount: {}", amount);
+    
     // Transfer sols
     let cpi_accounts = anchor_lang::system_program::Transfer {
         from: ctx.accounts.user.to_account_info(),
@@ -21,7 +25,7 @@ pub fn receive_and_store(ctx: Context<Receiver>, amount: u64) -> Result<()> {
     )?;
 
     let user_data = &mut ctx.accounts.user_data;
-    user_data.add_user(ctx.accounts.user_ata.key(), amount);
+    user_data.add_user(ctx.accounts.user.key(), amount);
 
     Ok(())
 }
@@ -50,10 +54,6 @@ pub struct Receiver<'info> {
     /// CHECK: This is the token account that we want to transfer tokens from
     #[account(mut)]
     pub user: Signer<'info>,
-
-    /// CHECK: This is the token account that we want to transfer tokens from
-    #[account(mut)]
-    pub user_ata: Box<InterfaceAccount<'info, TokenAccount>>,
 
     #[account(
         seeds = [ESCROW_TAG],

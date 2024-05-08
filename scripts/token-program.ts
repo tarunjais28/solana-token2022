@@ -112,18 +112,18 @@ const createToken = async () => {
 };
 
 const setConfig = async () => {
-    let royalty = 1;
-    let tokensPerSol=  new BN(150);
+  let royalty = 1;
+  let tokensPerSol = new BN(150);
 
   await program.methods
-      .setConfig(TEST, royalty, tokensPerSol)
-      .accounts({
-        maintainers: pdaMaintainers,
-        config: pdaConfig,
-        caller: AdminAddress,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .rpc();
+    .setConfig(TEST, royalty, tokensPerSol)
+    .accounts({
+      maintainers: pdaMaintainers,
+      config: pdaConfig,
+      caller: AdminAddress,
+      systemProgram: anchor.web3.SystemProgram.programId,
+    })
+    .rpc();
 };
 
 const initResources = async () => {
@@ -315,5 +315,5 @@ export {
   buyWithSol,
   getBaseKeys,
   fetchContractBalances,
-  setConfig
+  setConfig,
 };

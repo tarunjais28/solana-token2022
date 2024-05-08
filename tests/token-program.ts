@@ -395,10 +395,7 @@ describe("token_program", () => {
     // Check the configuration after transaction
     let config = await program.account.tokenConfiguration.fetch(pdaConfig);
     assert.equal(config.royalty, royalty);
-    assert.equal(
-      Number(config.tokensPerSol),
-      Number(tokensPerSol),
-    );
+    assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
 
     // For Test-1 token
     [pdaConfig] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -411,10 +408,7 @@ describe("token_program", () => {
     // Check the configuration after transaction
     config = await program.account.tokenConfiguration.fetch(pdaConfig);
     assert.equal(config.royalty, royalty);
-    assert.equal(
-      Number(config.tokensPerSol),
-      Number(tokensPerSol),
-    );
+    assert.equal(Number(config.tokensPerSol), Number(tokensPerSol));
   });
 
   it("Test Init Resources", async () => {

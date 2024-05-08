@@ -1,6 +1,6 @@
 use crate::{constants::*, errors::*, instructions::*, states::*};
 use anchor_lang::prelude::*;
-use anchor_spl::{token_2022::Token2022, token_interface::TokenAccount};
+use anchor_spl::token_2022::Token2022;
 
 mod constants;
 mod errors;

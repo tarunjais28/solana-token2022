@@ -263,10 +263,6 @@ export type Receiver = {
           "signer": true
         },
         {
-          "name": "userAta",
-          "writable": true
-        },
-        {
           "name": "escrowKey",
           "pda": {
             "seeds": [
